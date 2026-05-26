@@ -13,6 +13,8 @@
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 5
 - **Deletar Template**: Nessa feature, o usuário (admin) deve ser capaz de deletar os templates para formulários criados, quando clicar no template e entçao no botão correspondente.\
 **Responsável**: Roberto RIbeiro&ensp;**Story Points**: 3
+- **Buscar template**: Nessa feature, o usuário deve ser capaz de realizar a busca por templates existentes utilizando uma barra de pesquisa, filtrando os resultados na listagem.\
+**Responsável**: Lucas Teles Leiro&ensp;**Story Points**: 3
 ### Senha:
 - **Criar senha**: Nessa feature, o usuário deve ser capaz de criar uma senha logando com o email, quando acessar a plataforma pela primeira vez.\
 **Responsável**: Davi Brasileiro&ensp;**Story Points**: 5
