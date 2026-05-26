@@ -28,6 +28,8 @@
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 1
 - **Ver formulário (não preenchido)**: Nessa feature, o usuário deve ser capaz de ver as avaliações que ainda não respondeu quando acessar a página associada.\
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 3
+- **Responder formulário**: Nessa feature, o usuário (discente) deve ser capaz de preencher as questões de múltipla escolha e discursivas de um formulário disponível e enviar as respostas para concluir sua avaliação.\
+**Responsável**: Lucas Teles Leiro&ensp;**Story Points**: 5
 ### Login / Cadastro:
 - **Realizar Login**: Nessa feature, o usuário (admin / user) deve ser capaz de acessar a plataforma quando logar com e-mail e senha válidos.\
 **Responsável**: Davi Brasileiro&ensp;**Story Points**: 1
