@@ -28,9 +28,11 @@
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 1
 - **Ver formulário (não preenchido)**: Nessa feature, o usuário deve ser capaz de ver as avaliações que ainda não respondeu quando acessar a página associada.\
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 3
-### Login:
+### Login / Cadastro:
 - **Realizar Login**: Nessa feature, o usuário (admin / user) deve ser capaz de acessar a plataforma quando logar com e-mail e senha válidos.\
 **Responsável**: Davi Brasileiro&ensp;**Story Points**: 1
+- **Cadastrar usuários do sistema**: Nessa feature, o usuário (admin) deve ser capaz de cadastrar novos usuários (docentes ou discentes) informando nome, matrícula, e-mail e perfil de acesso.\
+**Responsável**: Lucas Teles Leiro&ensp;**Story Points**: 5
 ### Dados / requisições externas:
 - **Atualizar base de dados**: Nessa feature, o usuário (admin) deve ser capaz de atualizar os dados de turmas e alunos com base no banco de dados do SIGAA.\
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 10
