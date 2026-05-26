@@ -1,1 +1,40 @@
-# Especificações da Sprint 1:
+## Roberto Ribeiro Corrêa Neto - 242009936
+## Lucas Teles Leiro - 211066131
+## Davi Brasileiro Gomes - 241020741
+## CAMAAR - Sistema para avaliação de atividades remotas
+# Especificações da *Sprint* 1:
+**Product Owner**: Lucas Teles
+**Scrum Master**: Davi Brasileiro
+## Features desenvolvidas:
+### Templates:
+- **Visualizar template**: Nessa feature, o usuário (admin) deve ser capaz de visualizar os templates para formulários criados, quando acessar a página correspondente.
+**Responsável**: Davi Brasileiro     **Story Points**: 1
+- **Editar Template**: Nessa feature, o usuário (admin) deve ser capaz de editar os templates por ele criados, podendo alterar informações próprias do template (nome, tipo...), bem como da composição de questões.
+**Responsável**: Roberto Ribeiro     **Story Points**: 5
+- **Deletar Template**: Nessa feature, o usuário (admin) deve ser capaz de deletar os templates para formulários criados, quando clicar no template e entçao no botão correspondente.
+**Responsável**: Roberto RIbeiro     **Story Points**: 3
+### Senha:
+- **Criar senha**: Nessa feature, o usuário deve ser capaz de criar uma senha logando com o email, quando acessar a plataforma pela primeira vez.
+**Responsável**: Davi Brasileiro     **Story Points**: 5
+- **Redefinir senha por e-mail**: Nessa feature, o usuário deve ser capaz de requisitar a mudança de senha por link de e-mail, e a partir deste, fazer a mudança da senha.
+**Responsável**: Roberto Ribeiro     **Story Points**: 10
+### Resultados:
+- **Visualizar resultados**: Nessa feature, o usuário (admin) deve ser capaz de visualizar o resultado para as avaliações criadas, quando acessá-las da página correspondente.
+**Responsável**: Davi Brasileiro     **Story Points**: 3
+### Formulário (avaliação):
+- **Criar formulário**: Nessa feature, o usuário (admin) deve ser capaz de criar avaliações a partir de templates existentes, quando acessar a opção para tal.
+**Responsável**: Roberto Ribeiro     **Story Points**: 5
+- **Ver formulário (preenchido)**: Nessa feature, o usuário (admin) deve ser capaz de visualizar as avaliações criadas, quando acessar a página correspondente.
+**Responsável**: Roberto Ribeiro     **Story Points**: 1
+- **Ver formulário (não preenchido)**: Nessa feature, o usuário deve ser capaz de ver as avaliações que ainda não respondeu quando acessar a página associada.
+**Responsável**: Roberto Ribeiro    **Story Points**: 3
+### Login:
+- **Realizar Login**: Nessa feature, o usuário (admin / user) deve ser capaz de acessar a plataforma quando logar com e-mail e senha válidos.
+**Responsável**: Davi Brasileiro     **Story Points**: 1
+### Dados / requisições externas:
+- **Atualizar base de dados**: Nessa feature, o usuário (admin) deve ser capaz de atualizar os dados de turmas e alunos com base no banco de dados do SIGAA.
+**Responsável**: Roberto Ribeiro     **Story Points**: 10
+- **Gerenciar turmas do departamento**: Nessa feature, o usuário (admin) deve ser capaz de gerenciar e de visualizar os dados das turmas que leciona quando associar as informações na página associada.
+**Responsável**: Roberto Ribeiro     **Story Points**: 7
+## Estratégia de *branching*:
+Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feio o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*.
