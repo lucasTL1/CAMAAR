@@ -17,7 +17,7 @@ Feature: Viewing created forms
         When I navigate to the forms page
         And I click on the form named "Avaliação Docente 2026.1"
         Then I should see the details of "Avaliação Docente 2026.1"
-        And I should see an option to "Gerar Relatório"
+        And I should see an option to "Generate Report"
 
     Scenario: View empty forms list
         When I navigate to the forms page

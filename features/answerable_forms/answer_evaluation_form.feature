@@ -1,23 +1,23 @@
-Feature: Responder formulário de avaliação
-  Como um discente do sistema CAMAAR
-  Eu quero preencher e enviar as respostas de um formulário de avaliação
-  Para concluir minha avaliação da disciplina
+Feature: Answer evaluation form
+  As a student of the CAMAAR system
+  I want to fill in and submit the answers of an evaluation form
+  So that I can complete my evaluation of the subject
 
   Background:
-    Given que eu estou logado como um usuário discente
-    And eu já acessei a página do formulário da disciplina "Engenharia de Software"
+    Given I am logged in as a student user
+    And I have already accessed the form page for the subject "Engenharia de Software"
 
-  Scenario: [Caminho Feliz] Envio de formulário com todas as respostas preenchidas
-    When eu preencho a questão de múltipla escolha com "Excelente"
-    And eu preencho a questão discursiva com "O conteúdo foi muito bem ministrado."
-    And eu clico no botão "Enviar Avaliação"
-    Then o sistema deve registrar minhas respostas
-    And eu devo ser redirecionado para a lista de turmas
-    And eu devo ver a mensagem verde "Avaliação enviada com sucesso!"
+  Scenario: [Happy Path] Submit form with all answers filled in
+    When I fill the multiple choice question with "Excelente"
+    And I fill the open-ended question with "O conteúdo foi muito bem ministrado."
+    And I click the "Submit Evaluation" button
+    Then the system should record my answers
+    And I should be redirected to the class list
+    And I should see the green message "Avaliação enviada com sucesso!"
 
-  Scenario: [Caminho Triste] Tentativa de envio com perguntas obrigatórias em branco
-    When eu não seleciono nenhuma opção na questão de múltipla escolha
-    And eu deixo a questão discursiva em branco
-    And eu clico no botão "Enviar Avaliação"
-    Then o sistema não deve processar o envio
-    And eu devo ver o alerta "Existem questões obrigatórias não respondidas."
+  Scenario: [Sad Path] Attempt to submit with required questions left blank
+    When I do not select any option in the multiple choice question
+    And I leave the open-ended question blank
+    And I click the "Submit Evaluation" button
+    Then the system should not process the submission
+    And I should see the alert "Existem questões obrigatórias não respondidas."

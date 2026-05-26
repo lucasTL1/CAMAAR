@@ -1,44 +1,44 @@
-Given('que eu estou logado como {string}') do |perfil|
+Given('I am logged in as the {string} profile') do |profile|
   visit '/login'
   fill_in 'Usuário', with: 'admin'
   fill_in 'Senha', with: 'admin123'
-  click_button 'Entrar'
+  click_button 'Login'
 end
 
-Given('eu estou na página de {string}') do |pagina|
+Given('I am on the user registration page') do
   visit '/usuarios/novo'
 end
 
-When('eu preencho o campo {string} com {string}') do |campo, valor|
-  fill_in campo, with: valor
+When('I fill the {string} field with {string}') do |field, value|
+  fill_in field, with: value
 end
 
-When('eu seleciono o perfil {string}') do |perfil|
-  select perfil, from: 'Perfil de Acesso'
+When('I select the {string} profile') do |profile|
+  select profile, from: 'Perfil de Acesso'
 end
 
-When('eu clico no botão {string}') do |botao|
-  click_button botao
+When('I click the {string} button') do |button|
+  click_button button
 end
 
-Then('o sistema deve cadastrar o novo usuário') do
+Then('the system should register the new user') do
   expect(page).to have_current_path('/usuarios')
 end
 
-Then('eu devo ver a mensagem verde {string}') do |mensagem|
-  expect(page).to have_content(mensagem)
+Then('I should see the green message {string}') do |message|
+  expect(page).to have_content(message)
   expect(page).to have_selector('.alert-success')
 end
 
-Given('já existe um usuário cadastrado com o email {string}') do |email|
-  @usuario_existente = email
+Given('a user already exists with email {string}') do |email|
+  @existing_user = email
 end
 
-Then('o sistema não deve cadastrar o usuário') do
+Then('the system should not register the user') do
   expect(page).to have_current_path('/usuarios/novo')
 end
 
-Then('eu devo ver a mensagem de erro {string}') do |mensagem|
-  expect(page).to have_content(mensagem)
+Then('I should see the error message {string}') do |message|
+  expect(page).to have_content(message)
   expect(page).to have_selector('.alert-danger')
 end

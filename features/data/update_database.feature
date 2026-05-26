@@ -8,7 +8,7 @@ Feature: Updating the database with current SIGAA data
         Given a valid SIGAA data file is available
         When I navigate to the admin import page
         And I upload the SIGAA data file
-        And I click on "Atualizar Base de Dados"
+        And I click on "Update Database"
         Then I should see a confirmation message "Base de dados atualizada com sucesso"
         And the system data should reflect the new SIGAA information
 
@@ -18,7 +18,7 @@ Feature: Updating the database with current SIGAA data
         And a valid SIGAA data file is available
         When I navigate to the admin import page
         And I upload the SIGAA data file
-        And I click on "Atualizar Base de Dados"
+        And I click on "Update Database"
         Then I should see a confirmation message "Base de dados atualizada com sucesso"
         And the template "Template Existente" should still exist
         And the form "Formulário Existente" should still exist
@@ -27,6 +27,6 @@ Feature: Updating the database with current SIGAA data
         Given an invalid SIGAA data file is available
         When I navigate to the admin import page
         And I upload the SIGAA data file
-        And I click on "Atualizar Base de Dados"
+        And I click on "Update Database"
         Then I should see an error message "Arquivo SIGAA inválido"
         And the database should remain unchanged

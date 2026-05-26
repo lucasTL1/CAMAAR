@@ -1,43 +1,43 @@
-Feature: Login com email ou matrícula e exibição de menu administrativo
-  Como um Usuário do sistema
-  Eu quero acessar o sistema com email ou matrícula e senha já cadastrada
-  A fim de responder formulários ou gerenciar o sistema
+Feature: Login with email or registration number and admin menu display
+  As a System User
+  I want to log in with email or registration number and an already registered password
+  So that I can answer forms or manage the system
 
-  Observação: Quando o usuário logado é admin, a opção de gerenciamento aparece no menu lateral.
+  Note: When the logged-in user is an admin, the management option appears in the side menu.
 
   Background:
-    Given eu estou na página de login do CAMAAR
+    Given I am on the CAMAAR login page
 
-  Scenario: [Caminho Feliz] Login com email válido
-    Given existe um usuário comum com email "user@unb.br" e senha "Senha123"
-    When eu preencho o campo de identificação com "user@unb.br"
-    And eu preencho o campo de senha com "Senha123"
-    And eu clico no botão "Entrar"
-    Then eu devo ser redirecionado para o dashboard do CAMAAR
+  Scenario: [Happy Path] Login with valid email
+    Given a regular user exists with email "user@unb.br" and password "Senha123"
+    When I fill the identification field with "user@unb.br"
+    And I fill the password field with "Senha123"
+    And I click the "Login" button
+    Then I should be redirected to the CAMAAR dashboard
 
-  Scenario: Login com matrícula válida
-    Given existe um usuário com matrícula "200012345" e senha "Senha123"
-    When eu preencho o campo de identificação com "200012345"
-    And eu preencho o campo de senha com "Senha123"
-    And eu clico no botão "Entrar"
-    Then eu devo ser redirecionado para o dashboard do CAMAAR
+  Scenario: Login with valid registration number
+    Given a user exists with registration number "200012345" and password "Senha123"
+    When I fill the identification field with "200012345"
+    And I fill the password field with "Senha123"
+    And I click the "Login" button
+    Then I should be redirected to the CAMAAR dashboard
 
-  Scenario: Menu administrativo visível para admin
-    Given existe um administrador com email "admin@unb.br" e senha "AdminPass"
-    When eu preencho o campo de identificação com "admin@unb.br"
-    And eu preencho o campo de senha com "AdminPass"
-    And eu clico no botão "Entrar"
-    Then eu devo ver a opção "Gerenciamento" no menu lateral
+  Scenario: Admin menu visible for admin
+    Given an administrator exists with email "admin@unb.br" and password "AdminPass"
+    When I fill the identification field with "admin@unb.br"
+    And I fill the password field with "AdminPass"
+    And I click the "Login" button
+    Then I should see the "Management" option in the side menu
 
-  Scenario: Menu administrativo oculto para usuário comum
-    Given existe um usuário comum com email "user@unb.br" e senha "Senha123"
-    When eu preencho o campo de identificação com "user@unb.br"
-    And eu preencho o campo de senha com "Senha123"
-    And eu clico no botão "Entrar"
-    Then eu não devo ver a opção "Gerenciamento" no menu lateral
+  Scenario: Admin menu hidden for regular user
+    Given a regular user exists with email "user@unb.br" and password "Senha123"
+    When I fill the identification field with "user@unb.br"
+    And I fill the password field with "Senha123"
+    And I click the "Login" button
+    Then I should not see the "Management" option in the side menu
 
-  Scenario: [Caminho Triste] Credenciais inválidas
-    When eu preencho o campo de identificação com "user@unb.br"
-    And eu preencho o campo de senha com "SenhaErrada"
-    And eu clico no botão "Entrar"
-    Then eu devo ver a mensagem de erro "Identificação ou senha inválida"
+  Scenario: [Sad Path] Invalid credentials
+    When I fill the identification field with "user@unb.br"
+    And I fill the password field with "SenhaErrada"
+    And I click the "Login" button
+    Then I should see the error message "Identificação ou senha inválida"

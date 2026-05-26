@@ -1,44 +1,44 @@
-Given("eu estou na página de login do CAMAAR") do
+Given("I am on the CAMAAR login page") do
   visit "/login"
 end
 
-Given("existe um usuário comum com email {string} e senha {string}") do |email, password|
+Given("a regular user exists with email {string} and password {string}") do |email, password|
   User.find_or_create_by(email: email) do |u|
     u.password = password
     u.role = "user"
   end
 end
 
-Given("existe um usuário com matrícula {string} e senha {string}") do |matricula, password|
-  User.find_or_create_by(matricula: matricula) do |u|
+Given("a user exists with registration number {string} and password {string}") do |registration, password|
+  User.find_or_create_by(matricula: registration) do |u|
     u.password = password
     u.role = "user"
   end
 end
 
-Given("existe um administrador com email {string} e senha {string}") do |email, password|
+Given("an administrator exists with email {string} and password {string}") do |email, password|
   User.find_or_create_by(email: email) do |u|
     u.password = password
     u.role = "admin"
   end
 end
 
-When("eu preencho o campo de identificação com {string}") do |value|
+When("I fill the identification field with {string}") do |value|
   fill_in("Identificação", with: value)
 end
 
-And("eu preencho o campo de senha com {string}") do |value|
+And("I fill the password field with {string}") do |value|
   fill_in("Senha", with: value)
 end
 
-Then("eu devo ser redirecionado para o dashboard do CAMAAR") do
+Then("I should be redirected to the CAMAAR dashboard") do
   expect(page).to have_current_path("/dashboard")
 end
 
-Then("eu devo ver a opção {string} no menu lateral") do |option|
+Then("I should see the {string} option in the side menu") do |option|
   within(".sidebar-menu") { expect(page).to have_content(option) }
 end
 
-Then("eu não devo ver a opção {string} no menu lateral") do |option|
+Then("I should not see the {string} option in the side menu") do |option|
   within(".sidebar-menu") { expect(page).not_to have_content(option) }
 end

@@ -3,7 +3,7 @@ And("I change the template name to {string}") do |new_name|
 end
 
 And("I add a question {string}") do |question|
-  click_on("Adicionar Pergunta")
+  click_on("Add Question")
   fill_in("question", with: question)
 end
 

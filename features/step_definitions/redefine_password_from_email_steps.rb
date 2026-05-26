@@ -7,7 +7,7 @@ Given("I have requested a password reset for {string}") do |email|
   @reset_email = email
   visit "/password/new"
   fill_in("Email", with: email)
-  click_on("Enviar")
+  click_on("Send")
 end
 
 And("I have received the reset link in my email") do
@@ -68,5 +68,5 @@ Given("I have already redefined my password using the reset link") do
   visit @reset_link
   fill_in("Nova Senha", with: "NovaSenha123")
   fill_in("Confirmar Senha", with: "NovaSenha123")
-  click_on("Redefinir Senha")
+  click_on("Reset Password")
 end

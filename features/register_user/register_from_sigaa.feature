@@ -1,34 +1,34 @@
-Feature: Cadastro de participantes via importação SIGAA
-  Como um Administrador
-  Eu quero cadastrar participantes ao importar dados de novos usuários do SIGAA
-  A fim de que eles acessem o sistema CAMAAR
+Feature: Register participants via SIGAA import
+  As an Administrator
+  I want to register participants when importing data of new users from SIGAA
+  So that they can access the CAMAAR system
 
-  Observação: O cadastro é efetivado apenas após o usuário definir sua senha via email recebido.
+  Note: Registration is only completed after the user sets their password via the email received.
 
   Background:
-    Given que eu estou logado como "Administrador"
-    And eu navego para a página de "Importação SIGAA"
+    Given I am logged in as the "Administrador" profile
+    And I navigate to the "Importação SIGAA" page
 
-  Scenario: [Caminho Feliz] Solicitar definição de senha para novos participantes
-    Given um arquivo SIGAA contendo o participante novo "maria@unb.br" está disponível
-    And não existe usuário cadastrado com o email "maria@unb.br"
-    When eu faço upload do arquivo de participantes SIGAA
-    And eu clico no botão "Cadastrar Participantes"
-    Then o sistema deve criar uma solicitação de cadastro para "maria@unb.br"
-    And um email de definição de senha deve ser enviado para "maria@unb.br"
-    And o usuário "maria@unb.br" deve aparecer com status "Aguardando definição de senha"
+  Scenario: [Happy Path] Request password setup for new participants
+    Given a SIGAA file containing the new participant "maria@unb.br" is available
+    And no user is registered with the email "maria@unb.br"
+    When I upload the SIGAA participants file
+    And I click the "Register Participants" button
+    Then the system should create a registration request for "maria@unb.br"
+    And a password setup email should be sent to "maria@unb.br"
+    And the user "maria@unb.br" should appear with status "Aguardando definição de senha"
 
-  Scenario: Cadastro efetivado após definição de senha
-    Given existe uma solicitação de cadastro pendente para "maria@unb.br"
-    When o usuário "maria@unb.br" acessa o link de definição de senha recebido por email
-    And o usuário define a senha "SenhaForte123"
-    Then o cadastro de "maria@unb.br" deve ser efetivado
-    And o usuário "maria@unb.br" deve aparecer com status "Ativo"
+  Scenario: Registration completed after password setup
+    Given there is a pending registration request for "maria@unb.br"
+    When the user "maria@unb.br" accesses the password setup link received by email
+    And the user sets the password "SenhaForte123"
+    Then the registration of "maria@unb.br" should be completed
+    And the user "maria@unb.br" should appear with status "Ativo"
 
-  Scenario: [Caminho Triste] Participante já cadastrado é ignorado
-    Given já existe um usuário cadastrado com o email "joao@unb.br"
-    And um arquivo SIGAA contendo o participante "joao@unb.br" está disponível
-    When eu faço upload do arquivo de participantes SIGAA
-    And eu clico no botão "Cadastrar Participantes"
-    Then o sistema não deve enviar novo email para "joao@unb.br"
-    And eu devo ver a mensagem "Usuário joao@unb.br já cadastrado, ignorado"
+  Scenario: [Sad Path] Already registered participant is ignored
+    Given a user already exists with email "joao@unb.br"
+    And a SIGAA file containing the participant "joao@unb.br" is available
+    When I upload the SIGAA participants file
+    And I click the "Register Participants" button
+    Then the system should not send a new email to "joao@unb.br"
+    And I should see the message "Usuário joao@unb.br já cadastrado, ignorado"

@@ -34,9 +34,9 @@ Feature: Manage classes of own department
 
   Scenario: Edit a class from own department
     When I navigate to the classes management page
-    And I click on "Editar" for the class "CIC0124 - Banco de Dados"
+    And I click on "Edit" for the class "CIC0124 - Banco de Dados"
     And I update the professor to "Profa. Maria Silva"
-    And I click on "Salvar"
+    And I click on "Save"
     Then I should see a confirmation message "Turma atualizada com sucesso"
     And the class "CIC0124 - Banco de Dados" should have professor "Profa. Maria Silva"
 

@@ -1,43 +1,43 @@
-Given('eu já acessei a página do formulário da disciplina {string}') do |disciplina|
-  visit "/avaliacoes/responder/#{disciplina.downcase.tr(' ', '_')}"
+Given('I have already accessed the form page for the subject {string}') do |subject|
+  visit "/avaliacoes/responder/#{subject.downcase.tr(' ', '_')}"
 end
 
-When('eu preencho a questão de múltipla escolha com {string}') do |opcao|
-  choose opcao
+When('I fill the multiple choice question with {string}') do |option|
+  choose option
 end
 
-When('eu preencho a questão discursiva com {string}') do |texto|
-  fill_in 'Questão Discursiva', with: texto
+When('I fill the open-ended question with {string}') do |text|
+  fill_in 'Questão Discursiva', with: text
 end
 
-When('eu clico no botão {string}') do |botao|
-  click_button botao
+When('I click the {string} button') do |button|
+  click_button button
 end
 
-Then('o sistema deve registrar minhas respostas') do
+Then('the system should record my answers') do
 end
 
-Then('eu devo ser redirecionado para a lista de turmas') do
+Then('I should be redirected to the class list') do
   expect(page).to have_current_path('/turmas')
 end
 
-Then('eu devo ver a mensagem verde {string}') do |mensagem|
-  expect(page).to have_content(mensagem)
+Then('I should see the green message {string}') do |message|
+  expect(page).to have_content(message)
   expect(page).to have_selector('.alert-success')
 end
 
-When('eu não seleciono nenhuma opção na questão de múltipla escolha') do
+When('I do not select any option in the multiple choice question') do
 end
 
-When('eu deixo a questão discursiva em branco') do
+When('I leave the open-ended question blank') do
   fill_in 'Questão Discursiva', with: ''
 end
 
-Then('o sistema não deve processar o envio') do
-  expect(page).to have_button('Enviar Avaliação')
+Then('the system should not process the submission') do
+  expect(page).to have_button('Submit Evaluation')
 end
 
-Then('eu devo ver o alerta {string}') do |mensagem|
-  expect(page).to have_content(mensagem)
+Then('I should see the alert {string}') do |message|
+  expect(page).to have_content(message)
   expect(page).to have_selector('.alert-danger')
 end

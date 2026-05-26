@@ -1,26 +1,26 @@
-Feature: Importação inicial de dados do SIGAA
-  Como um Administrador
-  Eu quero importar dados de turmas, matérias e participantes do SIGAA caso não existam na base
-  A fim de alimentar a base de dados do sistema
+Feature: Initial import of SIGAA data
+  As an Administrator
+  I want to import class, subject and participant data from SIGAA if it does not exist in the database
+  So that I can populate the system database
 
   Background:
-    Given que eu estou logado como "Administrador"
-    And a base de dados do sistema está vazia
-    And eu navego para a página de "Importação SIGAA"
+    Given I am logged in as the "Administrador" profile
+    And the system database is empty
+    And I navigate to the "Importação SIGAA" page
 
-  Scenario: [Caminho Feliz] Importar dados SIGAA inexistentes
-    Given um arquivo SIGAA válido com turmas, matérias e participantes está disponível
-    When eu faço upload do arquivo SIGAA de importação
-    And eu clico no botão "Importar Dados"
-    Then o sistema deve criar as turmas no banco de dados
-    And o sistema deve criar as matérias no banco de dados
-    And o sistema deve criar os participantes no banco de dados
-    And eu devo ver a mensagem "Dados do SIGAA importados com sucesso"
+  Scenario: [Happy Path] Import non-existent SIGAA data
+    Given a valid SIGAA file with classes, subjects and participants is available
+    When I upload the SIGAA import file
+    And I click the "Import Data" button
+    Then the system should create the classes in the database
+    And the system should create the subjects in the database
+    And the system should create the participants in the database
+    And I should see the message "Dados do SIGAA importados com sucesso"
 
-  Scenario: Ignorar registros já existentes durante importação
-    Given já existe a turma "CIC0097" no sistema
-    And um arquivo SIGAA válido contendo a turma "CIC0097" está disponível
-    When eu faço upload do arquivo SIGAA de importação
-    And eu clico no botão "Importar Dados"
-    Then a turma "CIC0097" não deve ser duplicada no banco de dados
-    And eu devo ver a mensagem "Importação concluída: registros existentes preservados"
+  Scenario: Ignore already existing records during import
+    Given the class "CIC0097" already exists in the system
+    And a valid SIGAA file containing the class "CIC0097" is available
+    When I upload the SIGAA import file
+    And I click the "Import Data" button
+    Then the class "CIC0097" should not be duplicated in the database
+    And I should see the message "Importação concluída: registros existentes preservados"

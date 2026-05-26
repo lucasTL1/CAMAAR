@@ -16,11 +16,6 @@ And("I should not see {string} in the list") do |unexpected_template|
 end
 
 Then("I should not see any templates in the list") do
-  
-  expect(page).not_to have_selector(".template-card")
-end
 
-And("I should see the message {string}") do |message|
-  
-  expect(page).to have_content(message)
+  expect(page).not_to have_selector(".template-card")
 end
