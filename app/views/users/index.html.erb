@@ -1,0 +1,16 @@
+<h1>Usuários Cadastrados</h1>
+
+<%= link_to "Importar Novos Usuários", new_user_path %>
+
+<hr>
+
+<ul>
+  <% @users.each do |user| %>
+    <li>
+      <strong><%= user.nome %></strong> (Matrícula: <%= user.matricula %>) - <%= user.perfil %> <br>
+      Email: <%= user.email %> <br>
+      Status: <%= user.invitation_accepted? ? "Ativo (Senha criada)" : "Pendente (Aguardando acesso)" %>
+    </li>
+    <br>
+  <% end %>
+</ul>
