@@ -65,6 +65,11 @@ RSpec.configure do |config|
   # To enable this behaviour uncomment the line below.
   # config.infer_spec_type_from_file_location!
 
+  # Helpers do Devise/Warden para autenticar em specs (login_as)
+  config.include Warden::Test::Helpers
+  config.before(:suite) { Warden.test_mode! }
+  config.after(:each) { Warden.test_reset! }
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:

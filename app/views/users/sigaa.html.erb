@@ -1,0 +1,23 @@
+<h1>Importar dados do SIGAA</h1>
+
+<p>
+  Envie os arquivos <code>classes.json</code> e <code>class_members.json</code>.
+  Se nenhum arquivo for enviado, serão usados os JSONs presentes no repositório.
+</p>
+
+<%= form_with url: sigaa_import_users_path, multipart: true do |form| %>
+  <div style="margin-bottom: 15px;">
+    <%= form.label :classes_file, "Arquivo de turmas (classes.json):" %><br>
+    <%= form.file_field :classes_file, accept: ".json" %>
+  </div>
+
+  <div style="margin-bottom: 15px;">
+    <%= form.label :members_file, "Arquivo de participantes (class_members.json):" %><br>
+    <%= form.file_field :members_file, accept: ".json" %>
+  </div>
+
+  <%= form.submit "Importar SIGAA" %>
+<% end %>
+
+<br>
+<%= link_to "Voltar para a lista", users_path %>

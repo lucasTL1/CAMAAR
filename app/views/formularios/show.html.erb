@@ -1,0 +1,31 @@
+<h1><%= @formulario.titulo %></h1>
+<p><strong>Turma:</strong> <%= @formulario.turma.nome_completo %></p>
+
+<% if @ja_respondido %>
+  <p>Você já respondeu este formulário. Obrigado!</p>
+  <%= link_to "Voltar", formularios_path %>
+<% else %>
+  <%= form_with url: formulario_respostas_path(@formulario), method: :post do |form| %>
+    <% @formulario.questions.each do |question| %>
+      <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+        <p><strong><%= question.enunciado %></strong></p>
+
+        <% if question.multipla_escolha? %>
+          <% question.opcoes_lista.each do |opcao| %>
+            <div>
+              <%= radio_button_tag "respostas[#{question.id}]", opcao, false, id: "q#{question.id}_#{opcao.parameterize}" %>
+              <%= label_tag "q#{question.id}_#{opcao.parameterize}", opcao %>
+            </div>
+          <% end %>
+        <% else %>
+          <%= text_area_tag "respostas[#{question.id}]", nil, rows: 3, cols: 50 %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= form.submit "Enviar Respostas" %>
+  <% end %>
+
+  <br>
+  <%= link_to "Voltar", formularios_path %>
+<% end %>
