@@ -56,3 +56,8 @@ Enrollment.find_or_create_by!(user: aluno, turma: turma) { |e| e.role = "discent
 Formulario.find_or_create_by!(template: avaliacao, turma: turma) do |f|
   f.titulo = "Avaliação de Disciplina - Engenharia de Software"
 end
+
+# Resposta de exemplo (issue #8)
+Resposta.find_or_create_by!(formulario: Formulario.first, question: avaliacao.questions.first, user: aluno) do |r|
+  r.valor = "Excelente"
+end

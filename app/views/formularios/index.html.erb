@@ -12,9 +12,11 @@
         <li>
           <strong><%= link_to formulario.titulo, formulario %></strong>
           — <%= formulario.turma.nome_completo %><br>
-          Respostas: <%= formulario.total_respondentes %> de <%= formulario.total_participantes %><br>
-          <%= link_to "Ver resultados", formulario %> |
-          <%= link_to "Baixar relatório (CSV)", relatorio_formulario_path(formulario, format: :csv) %>
+          <% if formulario.total_respondentes > 0 %>
+            Respostas: <%= formulario.total_respondentes %> de <%= formulario.total_participantes %><br>
+            <%= link_to "Ver resultados", formulario %> |
+            <%= link_to "Baixar relatório (CSV)", relatorio_formulario_path(formulario, format: :csv) %>
+          <% end %>
         </li>
         <br>
       <% end %>

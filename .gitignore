@@ -4,6 +4,10 @@
 # belong in git's global ignore instead:
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
+# Ignore rails and rake binaries
+/bin/rails
+/bin/rake
+
 # Ignore bundler config.
 /.bundle
 
