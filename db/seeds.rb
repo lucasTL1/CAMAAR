@@ -43,6 +43,14 @@ aluno = User.find_or_create_by!(email: "aluno@camaar.com") do |u|
   u.password_confirmation = "password123"
 end
 
+aluno2 = User.find_or_create_by!(email: "aluno2@camaar.com") do |u|
+  u.nome = "Aluno 2"
+  u.matricula = "190000001"
+  u.perfil = "discente"
+  u.password = "password123"
+  u.password_confirmation = "password123"
+end
+
 # Turma de exemplo (issue #4) e matrículas (issues #4/#8)
 turma = Turma.find_or_create_by!(code: "CIC0105", class_code: "TA", semester: "2021.2") do |t|
   t.name = "ENGENHARIA DE SOFTWARE"
@@ -51,6 +59,7 @@ end
 
 Enrollment.find_or_create_by!(user: admin, turma: turma) { |e| e.role = "docente" }
 Enrollment.find_or_create_by!(user: aluno, turma: turma) { |e| e.role = "discente" }
+Enrollment.find_or_create_by!(user: aluno2, turma: turma) { |e| e.role = "discente" }
 
 # Formulário de exemplo gerado a partir do template (issue #7)
 Formulario.find_or_create_by!(template: avaliacao, turma: turma) do |f|

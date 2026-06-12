@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:invite, keys: %i[nome matricula perfil])
     devise_parameter_sanitizer.permit(:accept_invitation, keys: %i[nome matricula perfil])
   end
+
+  def after_sign_out_path_for(resource)
+    new_user_session_path
+  end
 end
