@@ -3,40 +3,43 @@ Then("I should see the message {string}") do |message|
 end
 
 And("the system database is empty") do
-  Klass.destroy_all if defined?(Klass)
-  Subject.destroy_all if defined?(Subject)
-  User.where.not(role: "admin").destroy_all if defined?(User)
+  Enrollment.destroy_all if defined?(Enrollment)
+  Turma.destroy_all if defined?(Turma)
+  User.where.not(perfil: "docente").destroy_all if defined?(User)
 end
 
 And("I navigate to the {string} page") do |page|
   paths = {
-    "Importação SIGAA" => "/admin/import"
+    "Importação SIGAA" => "/users/new"
   }
-  visit(paths[page] || "/admin/#{page.downcase.tr(' ', '_')}")
+  visit(paths[page] || "/users/#{page.downcase.tr(' ', '_')}")
 end
 
 Given("a valid SIGAA file with classes, subjects and participants is available") do
-  @sigaa_full_file = Rails.root.join("spec/fixtures/sigaa_full_valid.json")
+  @sigaa_file = Rails.root.join("db/amostra_sigaa.csv")
 end
 
 When("I upload the SIGAA import file") do
-  attach_file("sigaa_file", @sigaa_full_file)
+  attach_file("file", @sigaa_file)
 end
 
 Then("the system should create the classes in the database") do
-  expect(Klass.count).to be > 0
+  expect(Turma.count).to be > 0
 end
 
 And("the system should create the subjects in the database") do
-  expect(Subject.count).to be > 0
+  expect(Enrollment.count).to be > 0
 end
 
 And("the system should create the participants in the database") do
-  expect(User.where.not(role: "admin").count).to be > 0
+  expect(User.where.not(perfil: "docente").count).to be > 0
 end
 
 Given("the class {string} already exists in the system") do |code|
-  Klass.find_or_create_by(code: code)
+  Turma.find_or_create_by(code: code, class_code: "TA", semester: "2021.2") do |turma|
+    turma.name = code
+    turma.time = "35M12"
+  end
 end
 
 And("a valid SIGAA file containing the class {string} is available") do |code|
@@ -44,5 +47,9 @@ And("a valid SIGAA file containing the class {string} is available") do |code|
 end
 
 Then("the class {string} should not be duplicated in the database") do |code|
-  expect(Klass.where(code: code).count).to eq(1)
+  expect(Turma.where(code: code).count).to eq(1)
+end
+
+Then("I should be on the home page") do
+  expect(page).to have_current_path('/users')
 end

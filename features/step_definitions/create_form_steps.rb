@@ -13,3 +13,16 @@ end
 And("the form should be available for students of {string}") do |class_name|
   expect(page).to have_content("Formulário para discentes de #{class_name}")
 end
+
+And("I choose the template {string}") do |template_name|
+  select(template_name, from: "Template")
+end
+
+And("I follow {string}") do |link|
+  click_link(link)
+end
+
+Then("I should see the form creation page") do
+  expect(page).to have_current_path('/formularios/new')
+end
+

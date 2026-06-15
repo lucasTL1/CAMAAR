@@ -61,7 +61,7 @@ Given("the reset link has expired") do
 end
 
 And("I should see an option to {string}") do |option|
-  expect(page).to have_link(option).or have_button(option)
+  expect(page).to have_link(option)
 end
 
 Given("I have already redefined my password using the reset link") do

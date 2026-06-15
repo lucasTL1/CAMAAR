@@ -1,12 +1,12 @@
 Given('I am logged in as the {string} profile') do |profile|
-  visit '/login'
-  fill_in 'Usuário', with: 'admin'
-  fill_in 'Senha', with: 'admin123'
-  click_button 'Login'
+  visit new_user_session_path
+  fill_in 'Email', with: 'admin@camaar.com'
+  fill_in 'Password', with: 'password123'
+  click_button 'Log in'
 end
 
 Given('I am on the user registration page') do
-  visit '/usuarios/novo'
+  visit new_user_path
 end
 
 When('I fill the {string} field with {string}') do |field, value|
@@ -17,9 +17,10 @@ When('I select the {string} profile') do |profile|
   select profile, from: 'Perfil de Acesso'
 end
 
-When('I click the {string} button') do |button|
-  click_button button
-end
+# evitar ambiguidade com outros botões
+# When('I click the {string} button') do |button|
+#   click_button button
+# end
 
 Then('the system should register the new user') do
   expect(page).to have_current_path('/usuarios')

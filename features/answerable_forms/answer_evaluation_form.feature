@@ -5,7 +5,7 @@ Feature: Answer evaluation form
 
   Background:
     Given I am logged in as a student user
-    And I have already accessed the form page for the subject "Engenharia de Software"
+    And I have already accessed the "Avaliação de Disciplina - Engenharia de Software" page
 
   Scenario: [Happy Path] Submit form with all answers filled in
     When I fill the multiple choice question with "Excelente"

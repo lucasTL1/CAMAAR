@@ -4,8 +4,8 @@
 
 <h1>Usuários Cadastrados</h1>
 
-<%= link_to "Importar Novos Usuários", new_user_path %> |
 <% if current_user&.admin? %>
+  <%= link_to "Importar Novos Usuários", new_user_path %> |
   <%= link_to "Templates", templates_path %> |
 <% end %>
 <%= link_to "Formulários", formularios_path %>

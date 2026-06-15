@@ -1,13 +1,13 @@
 Given("a valid SIGAA data file is available") do
-  @sigaa_file = Rails.root.join("spec/fixtures/sigaa_valid.json")
+  @sigaa_file = Rails.root.join("db/amostra_sigaa.csv")
 end
 
 Given("an invalid SIGAA data file is available") do
-  @sigaa_file = Rails.root.join("spec/fixtures/sigaa_invalid.json")
+  @sigaa_file = Rails.root.join("db/amostra_sigaa_invalida.csv")
 end
 
 When("I navigate to the admin import page") do
-  visit("/admin/import")
+  visit("/users/new")
 end
 
 And("I upload the SIGAA data file") do

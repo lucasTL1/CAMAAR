@@ -67,6 +67,6 @@ Formulario.find_or_create_by!(template: avaliacao, turma: turma) do |f|
 end
 
 # Resposta de exemplo (issue #8)
-Resposta.find_or_create_by!(formulario: Formulario.first, question: avaliacao.questions.first, user: aluno) do |r|
+Resposta.find_or_create_by!(formulario: Formulario.first, question: avaliacao.questions.first, user: aluno2) do |r|
   r.valor = "Excelente"
 end

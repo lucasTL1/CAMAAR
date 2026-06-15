@@ -1,10 +1,13 @@
 Given("I am logged in as an admin user from the department {string}") do |department|
   @admin_department = department
-  user = User.find_or_create_by(email: "admin@unb.br") do |u|
-    u.role = "admin"
-    u.department = department
+  user = User.find_or_create_by(email: "admin@camaar.com") do |u|
+    u.perfil = "docente"
+    #u.department = department
   end
-  login_as(user, scope: :user)
+  visit new_user_session_path
+  fill_in 'Email', with: user.email
+  fill_in 'Password', with: 'password123'
+  click_button 'Log in'
 end
 
 And("the current semester is {string}") do |semester|
@@ -14,7 +17,7 @@ end
 And("the following classes exist:") do |table|
   @classes = table.hashes
   @classes.each do |row|
-    Klass.find_or_create_by(code: row["code"]) do |k|
+    Turma.find_or_create_by(code: row["code"]) do |k|
       k.name = row["name"]
       k.department = row["department"]
       k.semester = row["semester"]
@@ -71,6 +74,10 @@ And("the class {string} should have professor {string}") do |class_label, profes
   end
 end
 
+And("I click on {string}") do |button|
+  click_button button
+end
+
 When("I try to access the management page of the class {string}") do |code|
   visit("/classes/#{code}")
 end
@@ -80,5 +87,5 @@ And("I should be redirected to the classes management page") do
 end
 
 Given("the department {string} has no classes in semester {string}") do |department, semester|
-  Klass.where(department: department, semester: semester).destroy_all
+  Turma.where(department: department, semester: semester).destroy_all
 end

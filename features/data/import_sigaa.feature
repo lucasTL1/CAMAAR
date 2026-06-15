@@ -11,16 +11,17 @@ Feature: Initial import of SIGAA data
   Scenario: [Happy Path] Import non-existent SIGAA data
     Given a valid SIGAA file with classes, subjects and participants is available
     When I upload the SIGAA import file
-    And I click the "Import Data" button
+    And I click the "Importar e Enviar Convites" button
     Then the system should create the classes in the database
     And the system should create the subjects in the database
     And the system should create the participants in the database
-    And I should see the message "Dados do SIGAA importados com sucesso"
+    And I should see the message "Usuários importados e convites enviados com sucesso!"
 
   Scenario: Ignore already existing records during import
     Given the class "CIC0097" already exists in the system
     And a valid SIGAA file containing the class "CIC0097" is available
     When I upload the SIGAA import file
-    And I click the "Import Data" button
+    And I click the "Importar e Enviar Convites" button
     Then the class "CIC0097" should not be duplicated in the database
-    And I should see the message "Importação concluída: registros existentes preservados"
+    Then I should be on the home page
+    And I should see the message "Usuários importados e convites enviados com sucesso!"

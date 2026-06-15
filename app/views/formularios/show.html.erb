@@ -18,12 +18,13 @@
             </div>
           <% end %>
         <% else %>
-          <%= text_area_tag "respostas[#{question.id}]", nil, rows: 3, cols: 50 %>
+          <%= label_tag "respostas_#{question.id}", question.enunciado %><br>
+          <%= text_area_tag "respostas[#{question.id}]", nil, id: "respostas_#{question.id}", rows: 3, cols: 50 %>
         <% end %>
       </div>
     <% end %>
 
-    <%= form.submit "Enviar Respostas" %>
+    <%= form.submit "Submit Evaluation" %>
   <% end %>
 
   <br>
