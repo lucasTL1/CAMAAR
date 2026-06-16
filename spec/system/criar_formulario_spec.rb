@@ -19,7 +19,7 @@ RSpec.describe "Criar formulário", type: :system do
     check @turma.nome_completo
     click_button "Criar Formulário"
 
-    expect(page).to have_text("1 formulário(s) criado(s) com sucesso.")
+    expect(page).to have_text("Formulário criado com sucesso.")
     expect(Formulario.count).to eq(1)
     expect(Formulario.first.turma).to eq(@turma)
   end
