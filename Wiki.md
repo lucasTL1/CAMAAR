@@ -45,9 +45,6 @@
 ## Estratégia de *branching*:
 Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feito o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*. Após fazer todos os "merges", escolhemos deletar as branchs das features e deixar apenas a branch "feature-sprint-1" para deixar mais limpo e organizado.
 
-# Especificações da *Sprint* 2:
-**Product Owner**: [Nome]
-**Scrum Master**: [Nome]
 
 # Especificações da *Sprint* 2:
 **Product Owner**: [Nome - preencha se mudou]
