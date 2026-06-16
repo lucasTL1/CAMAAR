@@ -1,17 +1,13 @@
 And("I select the class {string}") do |class_name|
-  select(class_name, from: "class")
+  check("#{class_name}")
 end
 
-And("I choose the target audience {string}") do |audience|
-  choose(audience)
-end
-
-And("the form should be available for teachers of {string}") do |class_name|
-  expect(page).to have_content("Formulário para docentes de #{class_name}")
-end
-
-And("the form should be available for students of {string}") do |class_name|
-  expect(page).to have_content("Formulário para discentes de #{class_name}")
+And("a class {string} exists") do |class_name|
+  turma = Turma.find_or_create_by!(name: class_name) do |d|
+    d.code = "ES101"
+    d.class_code = "A"
+    d.semester = "2026.1"
+  end
 end
 
 And("I choose the template {string}") do |template_name|

@@ -1,8 +1,8 @@
-And('There is an evaluation form named {string} for the class {string}') do |form_name, class_name|
+And('There is an evaluation form named {string} for the class {string}, with code {string}, class code {string}, semester {string}') do |form_name, class_name, code, class_code, semester|
   turma = Turma.find_or_create_by!(name: class_name) do |d|
-    d.code = "ES101"
-    d.class_code = "A"
-    d.semester = "2026.1"
+    d.code = code
+    d.class_code = class_code
+    d.semester = semester
   end
 
   template = Template.find_or_create_by!(nome: "Avaliação de Disciplina") do |t|
@@ -15,7 +15,14 @@ end
 
 And('I access the {string} forms page') do |page_name|
   @formulario = Formulario.find_by!(titulo: page_name)
-  user = User.find_by!(email: "aluno@camaar.com")
+  user = User.find_or_create_by!(email: "aluno@camaar.com") do |u|
+    u.nome = "Aluno"
+    u.matricula = "111111111"
+    u.perfil = "discente"
+    u.password = "password123"
+    u.password_confirmation = "password123"
+    u.save!
+  end
 
   Enrollment.find_or_create_by!(user: user, turma: @formulario.turma, role: "discente")
 

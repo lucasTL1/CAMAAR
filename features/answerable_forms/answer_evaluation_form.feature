@@ -5,7 +5,7 @@ Feature: Answer evaluation form
 
   Background:
     Given I am logged in as a student user
-    And There is an evaluation form named "Avaliação de Disciplina - Engenharia de Software" for the class "Engenharia de Software"
+    And There is an evaluation form named "Avaliação de Disciplina - Engenharia de Software" for the class "Engenharia de Software", with code "CIC0105", class code "TA", semester "2021.2"
     And I navigate to the forms page
     And I access the "Avaliação de Disciplina - Engenharia de Software" forms page
 

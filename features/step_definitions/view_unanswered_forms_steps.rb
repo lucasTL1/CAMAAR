@@ -17,35 +17,37 @@ And("I am enrolled in the class {string}") do |class_name|
   @enrolled_classes << class_name
 end
 
-Given("there is an unanswered form {string} for the class {string}") do |form_name, class_name|
-  template = Template.find_or_create_by!(nome: "Template #{form_name}") do |record|
-    record.descricao = "Template criado para o teste de visualização de formulários."
-    record.publico_alvo = "discente"
-  end
-
-  turma = Turma.find_or_create_by!(code: "CIC0105", class_code: "TA", semester: "2021.2") do |record|
-    record.name = "ENGENHARIA DE SOFTWARE"
-    record.time = "35M12"
-  end
-
-  Formulario.find_or_create_by!(titulo: form_name, template: template, turma: turma)
-end
-
 And("I have already answered the form {string} for the class {string}") do |form_name, class_name|
   template = Template.find_or_create_by!(nome: "Template #{form_name}") do |record|
     record.descricao = "Template criado para o teste de visualização de formulários."
-    record.publico_alvo = "discente"
+    record.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    record.questions.build(enunciado: "Deixe sugestões para a disciplina.", tipo: "discursiva")
   end
 
-  turma = Turma.find_or_create_by!(code: "CIC0105", class_code: "TA", semester: "2021.2") do |record|
-    record.name = "ENGENHARIA DE SOFTWARE"
-    record.time = "35M12"
+  turma = Turma.find_or_create_by!(name: class_name) do |d|
+    d.code = "ES101"
+    d.class_code = "A"
+    d.semester = "2026.1"
   end
 
   form = Formulario.find_or_create_by!(titulo: form_name, template: template, turma: turma)
 
-  Enrollment.find_or_create_by(user: User.find_by(email: "aluno@camaar"), turma: turma, role: "discente") do |enrollment|
-    enrollment.answered_forms << form
+  user = User.find_or_create_by!(email: "aluno@camaar.com") do |u|
+    u.nome = "Aluno"
+    u.matricula = "111111111"
+    u.password = "password123"
+    u.password_confirmation = "password123"
+    u.save!
+  end
+
+  Enrollment.find_or_create_by(user: user, turma: turma)
+
+  for question in template.questions
+    Resposta.create!(
+      user: user,
+      question: question,
+      formulario: form
+    ) 
   end
 end
 
@@ -54,6 +56,11 @@ Then("I should see a list of unanswered forms") do
 end
 
 Then("I should see the questions of {string}") do |form_name|
-  expect(page).to have_selector(".form-questions")
-  expect(page).to have_content(form_name)
+  expect(page).to have_selector("#formulario_questoes")
+end
+
+And("the list should include {string} within {string}") do |form_name, section|
+  within("##{section.downcase}") do
+    expect(page).to have_content(form_name)
+  end
 end
