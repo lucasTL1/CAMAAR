@@ -43,21 +43,4 @@
 - **Gerenciar turmas do departamento**: Nessa feature, o usuário (admin) deve ser capaz de gerenciar e de visualizar os dados das turmas que leciona quando associar as informações na página associada.\
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 7
 ## Estratégia de *branching*:
-<<<<<<< HEAD
-Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feio o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*.
-
-# Especificações da *Sprint* 2:
-**Product Owner**: Roberto Neto
-**Scrum Master**: Lucas Teles
-## Objetivos:
-### Implementar os passos RSpec para definição dos steps de teste:
-Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveitar das funções da controladora na manipulação de entidades e recursos para os testes. Assim, tomou-se proveito de métodos como *find_or_create_by(:id)* para mockagem de dados, bem como métodos como *expect(content)* e *allow()* para tratar de comportamentos esperados de entidades envolvidas nas operações dos testes.
-
-### Implementar a arquitetura MVC no Rails seguindo as entidades do MER proposto, com métodos da controladora e as views correspondentes:
-- **Modelos**: Definição dos *schemas* das entidades considerando as hierarquias, relacionamentos e dependências.
-- **Controladoras**: Implementação das funções CRUD para as entidades, observando a modularidade e consistência.
-- **Views**: Uso do HTML + CSS + comportamento responsivo do rails por meio de funções como <%=if =%> e <%=yield =%> para maior personalização.
-- **Rotas**: Uso do mecanismo padrão do rails para contrução automática de rotas e paths, com auxílio do **Devise** para autenticação e login facilitados.
-=======
 Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feito o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*. Após fazer todos os "merges", escolhemos deletar as branchs das features e deixar apenas a branch "feature-sprint-1" para deixar mais limpo e organizado.
->>>>>>> sprint-2
