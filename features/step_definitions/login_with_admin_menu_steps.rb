@@ -26,7 +26,6 @@ end
 
 And("I fill the password field with {string}") do |value|
   fill_in("Password", with: value)
-  click_button("Log in")
 end
 
 Then("I should be redirected to the CAMAAR dashboard") do

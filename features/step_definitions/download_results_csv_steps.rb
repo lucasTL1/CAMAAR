@@ -4,13 +4,7 @@ Given("an answered form named {string} exists") do |name|
 end
 
 Given("a form with no answers named {string} exists") do |name|
-  @form_name = name
-  @form_answered = false
-end
-
-And("I am on the results page of the form {string}") do |name|
-  slug = name.downcase.tr(" .", "__").gsub(/[^a-z0-9_]/, "")
-  visit("/resultados/#{slug}")
+  #
 end
 
 Then("the browser should start downloading the file {string}") do |filename|

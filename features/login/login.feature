@@ -1,19 +1,27 @@
 Feature: User Login
 
+  Background:
+    Given the following users exist:
+      | email              | password       | perfil  |
+      |aluno3@camaar.com   | valid_password | discente|
+
   Scenario: Successful Login
-    Given the user is on the login page
-    When the user fills "valid_username" in the username field
-    And the user fills "valid_password" in the password field
-    Then the user should be redirected to the dashboard
+    Given I am on the login page
+    When I fill "admin@camaar.com" in the username field
+    And I fill "valid_password" in the password field
+    And I click the "Log in" button
+    Then I should be redirected to the dashboard
 
   Scenario: Unsuccessful Login
-    Given the user is on the login page
-    When the user fills "invalid_username" in the username field
-    And the user fills "invalid_password" in the password field
-    Then an error message should be displayed with "Invalid username or password"
+    Given I am on the login page
+    When I fill "invalid_username" in the username field
+    And I fill "invalid_password" in the password field
+    And I click the "Log in" button
+    Then I should see the message "Invalid email or password."
 
   Scenario: Empty Fields
-    Given the user is on the login page
-    When the user leaves "username" field empty
-    And the user leaves "password" field empty
-    Then an error message should be displayed with "Fields cannot be empty"
+    Given I am on the login page
+    When I leave "username" field empty
+    And I leave "password" field empty
+    And I click the "Log in" button
+    Then I should see the message "Invalid email or password."

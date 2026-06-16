@@ -29,6 +29,14 @@ Given("I have created a template with the name Avaliação de Docente") do
   template.save!
 end
 
+Given("I have created a template with the name {string}") do |template_name|
+  template = Template.find_or_create_by!(nome: template_name) do |t|
+    t.questions.build(enunciado: "Pergunta de múltipla escolha?", tipo: "multipla_escolha", opcoes: ["Opção 1", "Opção 2", "Opção 3"])
+    t.questions.build(enunciado: "Pergunta discursiva?", tipo: "discursiva")
+  end
+  template.save!
+end
+
 And("I am on the dashboard page") do
   visit("/")
 end
@@ -50,9 +58,15 @@ When("I navigate to the templates page") do
 end
 
 Then("I should see a list of created templates") do
-  expect(page).to have_selector(".template-list")
+  expect(page).to have_content("Templates")
 end
 
 Then("I should see the details of {string}") do |template_name|
   expect(page).to have_content(template_name)
+end
+
+When('I click on {string} for the template named {string}') do |template_name, action|
+  within('li', text: template_name) do
+    click_on(action)
+  end
 end

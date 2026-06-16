@@ -6,10 +6,6 @@ Given("an invalid SIGAA data file is available") do
   @sigaa_file = Rails.root.join("db/amostra_sigaa_invalida.csv")
 end
 
-When("I navigate to the admin import page") do
-  click_link("Importar Dados do SIGAA")
-end
-
 And("I upload the SIGAA data file") do
   attach_file("sigaa_file", @sigaa_file)
 end

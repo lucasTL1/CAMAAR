@@ -15,7 +15,7 @@ Given("I have created a form called {string}") do |form_name|
 end
 
 When("I navigate to the forms page") do
-  click_link("Formulários")
+  visit(formularios_path)
 end
 
 Then("I should see a list of created forms") do

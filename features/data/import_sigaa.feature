@@ -4,9 +4,10 @@ Feature: Initial import of SIGAA data
   So that I can populate the system database
 
   Background:
-    Given I am logged in as the "Administrador" profile
+    Given I am logged in as an admin user
+    And I am on the dashboard page
     And the system database is empty
-    And I navigate to the "Importação SIGAA" page
+    And I follow "Importar Novos Usuários"
 
   Scenario: [Happy Path] Import non-existent SIGAA data
     Given a valid SIGAA file with classes, subjects and participants is available
@@ -20,6 +21,7 @@ Feature: Initial import of SIGAA data
   Scenario: Ignore already existing records during import
     Given the class "CIC0097" already exists in the system
     And a valid SIGAA file containing the class "CIC0097" is available
+    And I click the "Choose File" button
     When I upload the SIGAA import file
     And I click the "Importar e Enviar Convites" button
     Then the class "CIC0097" should not be duplicated in the database

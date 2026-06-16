@@ -1,6 +1,6 @@
 When("I search for {string} in the search bar") do |search_term|
-  fill_in("Search", with: search_term)
-  click_button("Search")
+  fill_in("q", with: search_term)
+  click_button("Buscar")
 end
 
 Then("I should see {string} in the list") do |expected_template|

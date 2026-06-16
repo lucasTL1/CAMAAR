@@ -1,9 +1,9 @@
 And("I confirm the deletion") do
-  page.driver.browser.switch_to.alert.accept rescue click_on("Confirm")
+  page.driver.browser.switch_to.alert.accept rescue click_on("OK")
 end
 
 And("I cancel the deletion") do
-  page.driver.browser.switch_to.alert.dismiss rescue click_on("Cancel")
+  page.driver.browser.switch_to.alert.dismiss rescue click_on("Cancelar")
 end
 
 And("the list should not include {string} within {string}") do |item_name, list_name|

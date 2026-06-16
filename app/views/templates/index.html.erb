@@ -18,7 +18,7 @@
 <br>
 
 <% if @templates.any? %>
-  <ul>
+  <ul id="templates-list">
     <% @templates.each do |template| %>
       <li>
         <strong><%= link_to template.nome, template %></strong>

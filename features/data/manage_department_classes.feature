@@ -48,4 +48,4 @@ Feature: Manage classes of own department
   Scenario: View empty classes list when department has no classes in current semester
     Given the department "Departamento de Ciência da Computação" has no classes in semester "2026.1"
     When I navigate to the classes management page
-    Then I should see a message "Nenhuma turma encontrada para o semestre atual"
+    Then I should see the message "Nenhuma turma encontrada para o semestre atual"

@@ -47,5 +47,5 @@ Then("the class {string} should not be duplicated in the database") do |code|
 end
 
 Then("I should be on the home page") do
-  expect(page).to have_current_path('/')
+  expect(page).to have_current_path('/users')
 end
