@@ -1,7 +1,3 @@
-Then("I should see the message {string}") do |message|
-  expect(page).to have_content(message)
-end
-
 And("the system database is empty") do
   Enrollment.destroy_all if defined?(Enrollment)
   Turma.destroy_all if defined?(Turma)
@@ -51,5 +47,5 @@ Then("the class {string} should not be duplicated in the database") do |code|
 end
 
 Then("I should be on the home page") do
-  expect(page).to have_current_path('/users')
+  expect(page).to have_current_path('/')
 end

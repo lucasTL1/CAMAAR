@@ -5,7 +5,7 @@ end
 
 Given("I have requested a password reset for {string}") do |email|
   @reset_email = email
-  visit "/password/new"
+  visit(new_user_password_path)
   fill_in("Email", with: email)
   click_on("Send")
 end
@@ -40,15 +40,15 @@ Then("I should see an error message {string}") do |message|
 end
 
 And("I should be redirected to the login page") do
-  expect(page).to have_current_path("/login")
+  expect(page).to have_current_path(new_user_session_path)
 end
 
 And("I should be able to log in with {string} and {string}") do |email, password|
-  visit "/login"
-  fill_in("username", with: email)
-  fill_in("password", with: password)
-  click_on("Login")
-  expect(page).to have_current_path(dashboard_path)
+  visit new_user_session_path
+  fill_in("Email", with: email)
+  fill_in("Password", with: password)
+  click_button("Log in")
+  expect(page).to have_current_path('/')
 end
 
 And("my password should remain unchanged") do

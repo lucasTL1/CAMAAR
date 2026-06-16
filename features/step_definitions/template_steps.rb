@@ -13,8 +13,20 @@ Given("I am logged in as an admin user") do
   click_button('Log in')
 end
 
-Given("I have created a template with the name {string}") do |name|
-  # logic to create a template with the given name
+Given("I have created a template with the name Avaliação de Disciplina") do
+  template = Template.find_or_create_by!(nome: "Avaliação de Disciplina") do |t|
+    t.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    t.questions.build(enunciado: "Deixe sugestões para a disciplina.", tipo: "discursiva")
+  end
+  template.save!
+end
+
+Given("I have created a template with the name Avaliação de Docente") do
+  template = Template.find_or_create_by!(nome: "Avaliação de Docente") do |t|
+    t.questions.build(enunciado: "Como você avalia o docente?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    t.questions.build(enunciado: "Deixe sugestões para o docente.", tipo: "discursiva")
+  end
+  template.save!
 end
 
 And("I am on the dashboard page") do

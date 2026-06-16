@@ -31,7 +31,7 @@
   <%= link_to "Voltar", root_path %>
   <hr>
 
-  <h2>Pendentes</h2>
+  <h2 id="pendentes">Pendentes</h2>
   <% if @pendentes.any? %>
     <ul>
       <% @pendentes.each do |formulario| %>
@@ -47,7 +47,7 @@
     <p>Nenhum formulário pendente.</p>
   <% end %>
 
-  <h2>Respondidos</h2>
+  <h2 id="respondidos">Respondidos</h2>
   <% if @respondidos.any? %>
     <ul>
       <% @respondidos.each do |formulario| %>

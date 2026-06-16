@@ -1,38 +1,36 @@
 Given("I am on the CAMAAR login page") do
-  visit "/login"
+  visit(new_user_session_path)
 end
 
 Given("a regular user exists with email {string} and password {string}") do |email, password|
-  User.find_or_create_by(email: email) do |u|
-    u.password = password
-    u.role = "user"
-  end
-end
-
-Given("a user exists with registration number {string} and password {string}") do |registration, password|
-  User.find_or_create_by(matricula: registration) do |u|
-    u.password = password
-    u.role = "user"
-  end
+  user = User.find_or_create_by(email: email) { |u| u.perfil = "discente" }
+  user.nome = "Aluno" if user.nome.blank?
+  user.matricula = "111111111" if user.matricula.blank?
+  user.password = password
+  user.password_confirmation = password
+  user.save!
 end
 
 Given("an administrator exists with email {string} and password {string}") do |email, password|
-  User.find_or_create_by(email: email) do |u|
-    u.password = password
-    u.role = "admin"
-  end
+  user = User.find_or_create_by(email: email) { |u| u.perfil = "docente" }
+  user.nome = "Administrador" if user.nome.blank?
+  user.matricula = "222222222" if user.matricula.blank?
+  user.password = password
+  user.password_confirmation = password
+  user.save!
 end
 
 When("I fill the identification field with {string}") do |value|
-  fill_in("Identificação", with: value)
+  fill_in("Email", with: value)
 end
 
 And("I fill the password field with {string}") do |value|
-  fill_in("Senha", with: value)
+  fill_in("Password", with: value)
+  click_button("Log in")
 end
 
 Then("I should be redirected to the CAMAAR dashboard") do
-  expect(page).to have_current_path("/dashboard")
+  expect(page).to have_current_path("/")
 end
 
 Then("I should see the {string} option in the side menu") do |option|

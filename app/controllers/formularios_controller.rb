@@ -50,7 +50,7 @@ class FormulariosController < ApplicationController
       end
     end
 
-    redirect_to formularios_path, notice: "#{criados} formulário(s) criado(s) com sucesso."
+    redirect_to formularios_path, notice: "Formulário criado com sucesso."
   rescue ActiveRecord::RecordInvalid => e
     redirect_to new_formulario_path, alert: "Erro ao criar formulário: #{e.message}"
   end

@@ -6,8 +6,10 @@ And("I cancel the deletion") do
   page.driver.browser.switch_to.alert.dismiss rescue click_on("Cancel")
 end
 
-And("the list should not include {string}") do |item_name|
-  expect(page).not_to have_content(item_name)
+And("the list should not include {string} within {string}") do |item_name, list_name|
+  within("##{list_name.downcase}") do
+    expect(page).not_to have_content(item_name)
+  end
 end
 
 Given("I have created a form from the template {string}") do |template_name|
@@ -15,6 +17,6 @@ Given("I have created a form from the template {string}") do |template_name|
 end
 
 And("the form created from {string} should still exist") do |template_name|
-  visit("/forms")
+  visit("/formularios")
   expect(page).to have_content(template_name)
 end
