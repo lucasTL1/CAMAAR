@@ -43,6 +43,7 @@
 - **Gerenciar turmas do departamento**: Nessa feature, o usuário (admin) deve ser capaz de gerenciar e de visualizar os dados das turmas que leciona quando associar as informações na página associada.\
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 7
 ## Estratégia de *branching*:
+<<<<<<< HEAD
 Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feio o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*.
 
 # Especificações da *Sprint* 2:
@@ -57,3 +58,6 @@ Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveita
 - **Controladoras**: Implementação das funções CRUD para as entidades, observando a modularidade e consistência.
 - **Views**: Uso do HTML + CSS + comportamento responsivo do rails por meio de funções como <%=if =%> e <%=yield =%> para maior personalização.
 - **Rotas**: Uso do mecanismo padrão do rails para contrução automática de rotas e paths, com auxílio do **Devise** para autenticação e login facilitados.
+=======
+Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feito o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*. Após fazer todos os "merges", escolhemos deletar as branchs das features e deixar apenas a branch "feature-sprint-1" para deixar mais limpo e organizado.
+>>>>>>> sprint-2
