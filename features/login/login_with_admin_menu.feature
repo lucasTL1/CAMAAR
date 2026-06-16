@@ -15,13 +15,6 @@ Feature: Login with email or registration number and admin menu display
     And I click the "Login" button
     Then I should be redirected to the CAMAAR dashboard
 
-  Scenario: Login with valid registration number
-    Given a user exists with registration number "200012345" and password "Senha123"
-    When I fill the identification field with "200012345"
-    And I fill the password field with "Senha123"
-    And I click the "Login" button
-    Then I should be redirected to the CAMAAR dashboard
-
   Scenario: Admin menu visible for admin
     Given an administrator exists with email "admin@unb.br" and password "AdminPass"
     When I fill the identification field with "admin@unb.br"

@@ -7,7 +7,7 @@ Given("an invalid SIGAA data file is available") do
 end
 
 When("I navigate to the admin import page") do
-  visit("/users/new")
+  click_link("Importar Dados do SIGAA")
 end
 
 And("I upload the SIGAA data file") do
@@ -29,5 +29,5 @@ And("the form {string} should still exist") do |form_name|
 end
 
 And("the database should remain unchanged") do
-  expect(Klass.count).to eq(@classes ? @classes.size : Klass.count)
+  expect(Turma.count).to eq(@classes ? @classes.size : Turma.count)
 end

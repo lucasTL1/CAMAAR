@@ -13,7 +13,7 @@ Given("I have created a form called {string}") do |form_name|
 end
 
 When("I navigate to the forms page") do
-  visit("/formularios")
+  click_link("Formulários")
 end
 
 Then("I should see a list of created forms") do
@@ -24,6 +24,6 @@ And("I click on the form named {string}") do |form_name|
   click_link(form_name)
 end
 
-Then("I should see a message {string}") do |message|
+Then("I should see the message {string}") do |message|
   expect(page).to have_content(message)
 end

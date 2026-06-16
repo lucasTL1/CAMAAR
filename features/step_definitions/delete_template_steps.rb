@@ -15,6 +15,6 @@ Given("I have created a form from the template {string}") do |template_name|
 end
 
 And("the form created from {string} should still exist") do |template_name|
-  visit("/forms")
+  visit("/formularios")
   expect(page).to have_content(template_name)
 end

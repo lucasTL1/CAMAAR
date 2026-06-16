@@ -1,10 +1,13 @@
 Given("I am logged in as {string}") do |user_email|
   user = User.find_by(email: user_email)
-  login_as(user, scope: :user)
+  visit(new_user_session_path)
+  fill_in("Email", with: user.email)
+  fill_in("Password", with: "password123")
+  click_button("Log in")
 end
 
 Given("I am on the {string} page") do |page|
-  visit send("#{page.downcase}_path")
+  visit(send("#{page.downcase}_path"))
 end
 
 Given("I click on the {string} form") do |form_name|

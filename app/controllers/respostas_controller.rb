@@ -17,21 +17,28 @@ class RespostasController < ApplicationController
 
     respostas = params[:respostas] || {}
 
-    Resposta.transaction do
-      respostas.each do |question_id, valor|
-        next if valor.blank?
-        Resposta.create!(
-          formulario: @formulario,
-          user: current_user,
-          question_id: question_id,
-          valor: valor
-        )
-      end
+    expected_question_count = @formulario.questions.count
+    if respostas.keys.size < expected_question_count || respostas.values.any?(&:blank?)
+      flash[:alert] = "Existem questões obrigatórias não respondidas."
+      redirect_to formulario_path(@formulario) and return
     end
 
-    redirect_to formularios_path, notice: "Respostas enviadas. Obrigado!"
-  rescue ActiveRecord::RecordInvalid => e
-    redirect_to formulario_path(@formulario), alert: "Erro ao enviar respostas: #{e.message}"
+    begin
+      Resposta.transaction do
+        respostas.each do |question_id, valor|
+          Resposta.create!(
+            formulario: @formulario,
+            user: current_user,
+            question_id: question_id,
+            valor: valor
+          )
+        end
+      end
+
+      redirect_to formularios_path, notice: "Respostas enviadas. Obrigado!"
+    rescue ActiveRecord::RecordInvalid => e
+      redirect_to formulario_path(@formulario), alert: "Erro ao enviar respostas: #{e.message}"
+    end
   end
 
   private

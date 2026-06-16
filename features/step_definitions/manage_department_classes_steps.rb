@@ -4,10 +4,10 @@ Given("I am logged in as an admin user from the department {string}") do |depart
     u.perfil = "docente"
     #u.department = department
   end
-  visit new_user_session_path
-  fill_in 'Email', with: user.email
-  fill_in 'Password', with: 'password123'
-  click_button 'Log in'
+  visit(new_user_session_path)
+  fill_in('Email', with: user.email)
+  fill_in('Password', with: 'password123')
+  click_button('Log in')
 end
 
 And("the current semester is {string}") do |semester|
@@ -75,7 +75,7 @@ And("the class {string} should have professor {string}") do |class_label, profes
 end
 
 And("I click on {string}") do |button|
-  click_button button
+  click_button(button)
 end
 
 When("I try to access the management page of the class {string}") do |code|
