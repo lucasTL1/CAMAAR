@@ -44,3 +44,28 @@
 **Responsável**: Roberto Ribeiro&ensp;**Story Points**: 7
 ## Estratégia de *branching*:
 Inicialmente, criar uma *branch* central para consolidação das tarefas da *sprint* 1. Após isso, foi feito uma *branch* por feature implementada, sendo gradualmente feito o *merge* na branch original, agindo como centro do repositório. Com isso, evitamos conflitos na implementação das *features* por parte de cada integrante, garantindo a coesão do resultado no *merge* para a visão consolidada dos resultados da *sprint*. Após fazer todos os "merges", escolhemos deletar as branchs das features e deixar apenas a branch "feature-sprint-1" para deixar mais limpo e organizado.
+
+# Especificações da *Sprint* 2:
+**Product Owner**: [Nome]
+**Scrum Master**: [Nome]
+
+## Features desenvolvidas:
+
+### Turmas / Departamento:
+- **Filtrar turmas por departamento**: Nessa feature, a listagem de turmas foi ajustada no sistema para garantir que os administradores visualizem apenas as turmas vinculadas ao seu respectivo departamento. A regra de negócio foi consolidada no controlador com tratamento de usuários não logados.\
+**Responsável**: Lucas Teles Leiro&ensp;**Story Points**: [X]
+
+### Login / Navegação:
+- **Redirecionamento Pós-Login**: O fluxo de autenticação foi ajustado. Após um login bem-sucedido, o sistema agora redireciona o usuário (admin/docente/discente) diretamente para a página inicial com o menu de ações, evitando cair em telas secundárias.\
+**Responsável**: Lucas Teles Leiro&ensp;**Story Points**: [X]
+
+### [Categoria da Feature do Colega]:
+- **[Nome da Feature]**: [Descrição].\
+**Responsável**: Roberto Ribeiro&ensp;**Story Points**: [X]
+
+### [Categoria da Feature do Colega]:
+- **[Nome da Feature]**: [Descrição].\
+**Responsável**: Davi Brasileiro&ensp;**Story Points**: [X]
+
+## Estratégia de *branching*:
+Para a Sprint 2, consolidamos as implementações na branch `sprint-2`. Os merges foram realizados e testados localmente, garantindo a integridade do sistema e a resolução de conflitos (incluindo chaves do Rails). [cite_start]Todos os testes RSpec [cite: 7] [cite_start]foram validados com 100% de sucesso antes da abertura do Pull Request[cite: 16].
