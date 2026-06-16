@@ -75,6 +75,7 @@ Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveita
 - **Criar formulário (#7)**: Funcionalidade para criar um novo formulário a partir de um template já existente, para turmas dentro do contexto do administrador.
 - **Visualizar formulário para responder (#8)**: Condição do usuário, que acessa a página de formulários para acessar aqueles que ainda vão ser respondidos, podendo selecioná-los.
 - **Importar dados do SIGAA (#4)**: Capacidade de importar novos usuários a partir de arquivos .csv
+- **Visualização de templates criados**: Visualizar os templates disponíveis
 
 ### Responsável: Roberto Ribeiro Corrêa Neto
 - **Criar senha (#5)**: Implementação do fluxo para o usuário criar uma senha ao acessar a plataforma pela primeira vez logando com o e-mail.
