@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :turmas, only: [:index]
   devise_for :users
 
   resources :users, only: [:index, :new] do

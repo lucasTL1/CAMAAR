@@ -31,6 +31,7 @@ admin = User.find_or_create_by!(email: "admin@camaar.com") do |u|
   u.nome = "Administrador"
   u.matricula = "000000000"
   u.perfil = "docente"
+  u.departamento = "CIC"
   u.password = "password123"
   u.password_confirmation = "password123"
 end
@@ -55,6 +56,7 @@ end
 turma = Turma.find_or_create_by!(code: "CIC0105", class_code: "TA", semester: "2021.2") do |t|
   t.name = "ENGENHARIA DE SOFTWARE"
   t.time = "35M12"
+  t.departamento = "CIC"
 end
 
 Enrollment.find_or_create_by!(user: admin, turma: turma) { |e| e.role = "docente" }

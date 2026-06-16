@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_10_120003) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_16_140643) do
   create_table "enrollments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "role", default: "discente", null: false
@@ -69,6 +69,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_120003) do
     t.string "class_code", null: false
     t.string "code", null: false
     t.datetime "created_at", null: false
+    t.string "departamento"
     t.string "name", null: false
     t.string "semester", null: false
     t.string "time"
@@ -78,6 +79,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_10_120003) do
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
+    t.string "departamento"
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.datetime "invitation_accepted_at"
