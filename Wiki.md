@@ -76,5 +76,13 @@ Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveita
 - **Visualizar formulário para responder (#8)**: Condição do usuário, que acessa a página de formulários para acessar aqueles que ainda vão ser respondidos, podendo selecioná-los.
 - **Importar dados do SIGAA (#4)**: Capacidade de importar novos usuários a partir de arquivos .csv
 
+### Responsável: Roberto Ribeiro Corrêa Neto
+- **Criar senha (#5)**: Implementação do fluxo para o usuário criar uma senha ao acessar a plataforma pela primeira vez logando com o e-mail.
+- **Criar template de formulário (#10)**: Criação de templates de formulários pelo administrador, definindo nome, tipo e a composição de questões.
+- **Edição e deleção de templates (#11)**: Edição dos templates criados (informações próprias e composição de questões) e remoção de templates a partir da página do template.
+- **Criação de formulário para docentes ou discentes (#12)**: Criação de formulários direcionados a docentes ou discentes a partir de templates existentes.
+- **Visualização de resultados dos formulários (#13)**: Visualização do resultado das avaliações criadas a partir da página correspondente (view `formularios/resultados`).
+- **Atualizar base de dados com os dados do SIGAA (#14)**: Atualização dos dados de turmas e alunos com base no banco do SIGAA, incluindo o serviço `app/services/sigaa_importer.rb`.
+
 ## Estratégia de *branching*:
 Para a Sprint 2, consolidamos as implementações na branch `sprint-2`. Os merges foram realizados e testados localmente, garantindo a integridade do sistema e a resolução de conflitos (incluindo chaves do Rails). [cite_start]Todos os testes RSpec [cite: 7] [cite_start]foram validados com 100% de sucesso antes da abertura do Pull Request[cite: 16].
