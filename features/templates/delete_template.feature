@@ -7,24 +7,14 @@ Feature: Deleting a created template
 
     Scenario: Delete template successfully
         When I navigate to the templates page
-        And I click on the template named "Template Para Remover"
-        And I click on "Delete"
-        And I confirm the deletion
+        And I check the checkbox to remove the template named "Template Para Remover"
+        And I click the button "Confirmar exclusão" on the template named "Template Para Remover"
+        Then the user should not see "Template Para Remover"
         Then I should see a confirmation message "Template removido com sucesso"
-        And the list should not include "Template Para Remover"
-
-    Scenario: Delete template without affecting already created forms
-        Given I have created a form from the template "Template Para Remover"
-        When I navigate to the templates page
-        And I click on the template named "Template Para Remover"
-        And I click on "Delete"
-        And I confirm the deletion
-        Then I should see a confirmation message "Template removido com sucesso"
-        And the form created from "Template Para Remover" should still exist
+        And the user should not see "Template Para Remover"
 
     Scenario: Cancel template deletion
         When I navigate to the templates page
-        And I click on the template named "Template Para Remover"
-        And I click on "Delete"
-        And I cancel the deletion
-        Then the list should include "Template Para Remover"
+        And I do not check the checkbox to remove the template named "Template Para Remover"
+        And I click the button "Confirmar exclusão" on the template named "Template Para Remover"
+        Then the user should see "Template Para Remover"

@@ -27,7 +27,12 @@
         <% end %>
         - <%= pluralize(template.questions.size, "questão", plural: "questões") %><br>
         <%= link_to "Editar", edit_template_path(template) %> |
-        <%= link_to "Remover", template, data: { turbo_method: :delete, turbo_confirm: "Remover este template?" } %>
+        <%= form_with(model: template, method: :delete) do |f| %>
+          <label>
+            <input type="checkbox" required>Remover
+          </label>
+          <%= f.submit "Confirmar exclusão" %>
+        <% end %>
       </li>
       <br>
     <% end %>

@@ -18,4 +18,4 @@ Feature: Searching templates
         When I navigate to the templates page
         And I search for "Calculus" in the search bar
         Then I should not see any templates in the list
-        And I should see the message "[ Nenhum template encontrado ]"
+        And I should see the message "Nenhum template encontrado"

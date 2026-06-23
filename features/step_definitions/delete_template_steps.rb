@@ -1,9 +1,19 @@
-And("I confirm the deletion") do
-  page.driver.browser.switch_to.alert.accept rescue click_on("Confirm")
+And("I check the checkbox to remove the template named {string}") do |template_name|
+  within('li', text: template_name) do
+    check('Remover')
+  end
 end
 
-And("I cancel the deletion") do
-  page.driver.browser.switch_to.alert.dismiss rescue click_on("Cancel")
+And("I do not check the checkbox to remove the template named {string}") do |template_name|
+  within('li', text: template_name) do
+    uncheck('Remover')
+  end
+end
+
+And("I click the button {string} on the template named {string}") do |button_text, template_name|
+  within('li', text: template_name) do
+    click_button(button_text)
+  end
 end
 
 And("the list should not include {string} within {string}") do |item_name, list_name|
