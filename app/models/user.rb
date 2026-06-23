@@ -2,6 +2,8 @@ class User < ApplicationRecord
   # O devise_invitable cuida do envio do e-mail para definição de senha
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :validatable
 
+  before_validation { self.email = email.downcase if email.present? }
+  
   # Regras para impedir o banco de salvar dados vazios ou repetidos
   validates :nome, presence: true
   validates :matricula, presence: true, uniqueness: true
@@ -20,4 +22,5 @@ class User < ApplicationRecord
   def discente?
     perfil == "discente"
   end
+
 end

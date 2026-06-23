@@ -21,4 +21,3 @@ end
 Then("I should see the form creation page") do
   expect(page).to have_current_path('/formularios/new')
 end
-

@@ -53,9 +53,7 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'rspec-rails'
-  gem 'capybara'
-  
+  gem "rspec-rails"
 end
 
 group :development do
@@ -65,13 +63,13 @@ end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'simplecov', require: false
+  gem "simplecov", require: false
   gem "capybara"
   gem "cucumber-rails", require: false
   gem "selenium-webdriver"
   gem "database_cleaner"
 end
 
-gem 'devise'
-gem 'devise_invitable'
-gem 'csv'
+gem "devise"
+gem "devise_invitable"
+gem "csv"

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Formulario, type: :model do
   let(:template) do
     Template.create!(nome: "Avaliação",
-                     questions_attributes: [{ enunciado: "Q1?", tipo: "discursiva" }])
+                     questions_attributes: [ { enunciado: "Q1?", tipo: "discursiva" } ])
   end
   let(:turma) { Turma.create!(code: "CIC0105", name: "ENG SW", class_code: "TA", semester: "2021.2") }
   let(:aluno) do

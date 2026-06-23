@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  resources :turmas, only: [:index]
+  resources :turmas, only: [ :index ]
   devise_for :users
 
-  resources :users, only: [:index, :new] do
+  resources :users, only: [ :index, :new ] do
     collection do
       post :import
       get :sigaa
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
     member do
       get :relatorio
     end
-    resources :respostas, only: [:create]
+    resources :respostas, only: [ :create ]
   end
 
   root "users#index"

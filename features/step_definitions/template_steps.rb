@@ -15,7 +15,7 @@ end
 
 Given("I have created a template with the name Avaliação de Disciplina") do
   template = Template.find_or_create_by!(nome: "Avaliação de Disciplina") do |t|
-    t.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    t.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: [ "Excelente", "Bom", "Regular", "Ruim" ])
     t.questions.build(enunciado: "Deixe sugestões para a disciplina.", tipo: "discursiva")
   end
   template.save!
@@ -23,7 +23,7 @@ end
 
 Given("I have created a template with the name Avaliação de Docente") do
   template = Template.find_or_create_by!(nome: "Avaliação de Docente") do |t|
-    t.questions.build(enunciado: "Como você avalia o docente?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    t.questions.build(enunciado: "Como você avalia o docente?", tipo: "multipla_escolha", opcoes: [ "Excelente", "Bom", "Regular", "Ruim" ])
     t.questions.build(enunciado: "Deixe sugestões para o docente.", tipo: "discursiva")
   end
   template.save!

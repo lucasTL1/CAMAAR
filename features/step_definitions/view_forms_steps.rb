@@ -1,7 +1,7 @@
 Given("I have created a form called {string}") do |form_name|
   template = Template.find_or_create_by!(nome: "Template #{form_name}") do |record|
     record.descricao = "Template criado para o teste de visualização de formulários."
-    record.questions.build(enunciado: "Pergunta de múltipla escolha?", tipo: "multipla_escolha", opcoes: ["Opção 1", "Opção 2", "Opção 3"])
+    record.questions.build(enunciado: "Pergunta de múltipla escolha?", tipo: "multipla_escolha", opcoes: [ "Opção 1", "Opção 2", "Opção 3" ])
     record.questions.build(enunciado: "Pergunta discursiva?", tipo: "discursiva")
   end
 

@@ -1,4 +1,4 @@
-require 'csv'
+require "csv"
 
 class FormulariosController < ApplicationController
   before_action :authenticate_user!
@@ -15,8 +15,8 @@ class FormulariosController < ApplicationController
     else
       turma_ids = current_user.enrollments.discentes.pluck(:turma_id)
       formularios = Formulario.includes(:turma, :template).where(turma_id: turma_ids)
-      @pendentes   = formularios.reject { |f| f.respondido_por?(current_user) }
-      @respondidos = formularios.select { |f| f.respondido_por?(current_user) }
+      @pendentes   = formularios.reject { |form| form.respondido_por?(current_user) }
+      @respondidos = formularios - @pendentes
     end
   end
 
@@ -51,8 +51,8 @@ class FormulariosController < ApplicationController
     end
 
     redirect_to formularios_path, notice: "Formulário criado com sucesso."
-  rescue ActiveRecord::RecordInvalid => e
-    redirect_to new_formulario_path, alert: "Erro ao criar formulário: #{e.message}"
+  rescue ActiveRecord::RecordInvalid => error
+    redirect_to new_formulario_path, alert: "Erro ao criar formulário: #{error.message}"
   end
 
   # GET /formularios/:id
@@ -90,19 +90,19 @@ class FormulariosController < ApplicationController
   # Monta o CSV com as respostas do formulário
   def gerar_csv(formulario)
     CSV.generate do |csv|
-      csv << ["Formulário", formulario.titulo]
-      csv << ["Turma", formulario.turma.nome_completo]
-      csv << ["Respondentes", "#{formulario.total_respondentes} de #{formulario.total_participantes}"]
+      csv << [ "Formulário", formulario.titulo ]
+      csv << [ "Turma", formulario.turma.nome_completo ]
+      csv << [ "Respondentes", "#{formulario.total_respondentes} de #{formulario.total_participantes}" ]
       csv << []
-      csv << ["Questão", "Tipo", "Resposta"]
+      csv << [ "Questão", "Tipo", "Resposta" ]
 
       formulario.questions.each do |question|
         respostas = formulario.respostas_da(question)
         if respostas.empty?
-          csv << [question.enunciado, question.tipo, "(sem respostas)"]
+          csv << [ question.enunciado, question.tipo, "(sem respostas)" ]
         else
           respostas.each do |resposta|
-            csv << [question.enunciado, question.tipo, resposta.valor]
+            csv << [ question.enunciado, question.tipo, resposta.valor ]
           end
         end
       end

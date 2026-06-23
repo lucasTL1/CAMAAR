@@ -7,5 +7,4 @@ RSpec.describe "Turmas", type: :request do
       expect(response).not_to have_http_status(:not_found)
     end
   end
-
 end

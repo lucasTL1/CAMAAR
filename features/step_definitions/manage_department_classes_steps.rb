@@ -2,7 +2,7 @@ Given("I am logged in as an admin user from the department {string}") do |depart
   @admin_department = department
   user = User.find_or_create_by(email: "admin@camaar.com") do |u|
     u.perfil = "docente"
-    #u.department = department
+    # u.department = department
   end
   visit(new_user_session_path)
   fill_in('Email', with: user.email)

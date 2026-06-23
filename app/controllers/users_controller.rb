@@ -1,5 +1,5 @@
-require 'csv'
-require 'json'
+require "csv"
+require "json"
 
 class UsersController < ApplicationController
   def index
@@ -33,11 +33,12 @@ class UsersController < ApplicationController
 
     CSV.foreach(file.path, headers: true) do |row|
       # Cria o registro e envia o token por e-mail automaticamente
+      next if User.exists?(email: row["email"]) # Evita duplicatas
       User.invite!(
-        nome: row['nome'],
-        email: row['email'],
-        matricula: row['matricula'],
-        perfil: row['perfil']
+        nome: row["nome"],
+        email: row["email"],
+        matricula: row["matricula"],
+        perfil: row["perfil"]
       )
     end
 

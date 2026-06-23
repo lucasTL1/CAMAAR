@@ -20,7 +20,7 @@ end
 And("I have already answered the form {string} for the class {string}") do |form_name, class_name|
   template = Template.find_or_create_by!(nome: "Template #{form_name}") do |record|
     record.descricao = "Template criado para o teste de visualização de formulários."
-    record.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: ["Excelente", "Bom", "Regular", "Ruim"])
+    record.questions.build(enunciado: "Como você avalia a disciplina?", tipo: "multipla_escolha", opcoes: [ "Excelente", "Bom", "Regular", "Ruim" ])
     record.questions.build(enunciado: "Deixe sugestões para a disciplina.", tipo: "discursiva")
   end
 
@@ -47,7 +47,7 @@ And("I have already answered the form {string} for the class {string}") do |form
       user: user,
       question: question,
       formulario: form
-    ) 
+    )
   end
 end
 

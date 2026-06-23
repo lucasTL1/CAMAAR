@@ -10,10 +10,10 @@ Feature: User Login
     Given the user is on the login page
     When the user fills "invalid_username" in the username field
     And the user fills "invalid_password" in the password field
-    Then an error message should be displayed with "Invalid username or password"
+    Then I should see the message "Invalid username or password"
 
   Scenario: Empty Fields
     Given the user is on the login page
     When the user leaves "username" field empty
     And the user leaves "password" field empty
-    Then an error message should be displayed with "Fields cannot be empty"
+    Then I should see the message "Fields cannot be empty"

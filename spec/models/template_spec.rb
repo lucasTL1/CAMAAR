@@ -34,7 +34,7 @@ RSpec.describe Template, type: :model do
     it "cria questões junto do template" do
       template = Template.create!(
         nome: "Com questões",
-        questions_attributes: [{ enunciado: "Pergunta 1?", tipo: "discursiva" }]
+        questions_attributes: [ { enunciado: "Pergunta 1?", tipo: "discursiva" } ]
       )
       expect(template.questions.count).to eq(1)
     end
@@ -42,7 +42,7 @@ RSpec.describe Template, type: :model do
     it "ignora questões com enunciado em branco" do
       template = Template.create!(
         nome: "Sem questões reais",
-        questions_attributes: [{ enunciado: "", tipo: "discursiva" }]
+        questions_attributes: [ { enunciado: "", tipo: "discursiva" } ]
       )
       expect(template.questions).to be_empty
     end

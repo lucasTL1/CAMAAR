@@ -4,10 +4,10 @@ When("I search for {string} in the search bar") do |search_term|
 end
 
 Then("I should see {string} in the list") do |expected_template|
-  expect(page).to have_content(expected_template)  
+  expect(page).to have_content(expected_template)
 end
 
-And("I should not see {string} in the list") do |unexpected_template|  
+And("I should not see {string} in the list") do |unexpected_template|
   expect(page).not_to have_content(unexpected_template)
 end
 

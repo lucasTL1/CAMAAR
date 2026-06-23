@@ -10,7 +10,7 @@ RSpec.describe "Resultados e relatório do formulário", type: :system do
                           matricula: "190000000", perfil: "discente")
     @template = Template.create!(
       nome: "Avaliação",
-      questions_attributes: [{ enunciado: "Como foi a disciplina?", tipo: "discursiva" }]
+      questions_attributes: [ { enunciado: "Como foi a disciplina?", tipo: "discursiva" } ]
     )
     @turma = Turma.create!(code: "CIC0105", name: "ENG SW", class_code: "TA", semester: "2021.2")
     Enrollment.create!(user: @aluno, turma: @turma, role: "discente")

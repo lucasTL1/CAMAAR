@@ -9,17 +9,15 @@ RSpec.describe "Redefinição de senha", type: :system do
     user = User.create!(
       nome: "Aluno Esquecido",
       matricula: "190012345",
-      email: "esquecido@camaar.com", 
-      password: "senha_antiga", 
+      email: "esquecido@camaar.com",
+      password: "senha_antiga",
       perfil: "discente"
     )
 
     visit new_user_session_path
     click_link "Forgot your password?"
-    
     fill_in "Email", with: user.email
     click_button "Send me password reset instructions"
-    
     expect(page).to have_text("You will receive an email with instructions")
   end
 
@@ -27,8 +25,8 @@ RSpec.describe "Redefinição de senha", type: :system do
     user = User.create!(
       nome: "Aluno Recuperado",
       matricula: "190054321",
-      email: "recuperado@camaar.com", 
-      password: "senha_antiga", 
+      email: "recuperado@camaar.com",
+      password: "senha_antiga",
       perfil: "discente"
     )
 
