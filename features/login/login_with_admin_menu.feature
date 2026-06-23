@@ -6,31 +6,32 @@ Feature: Login with email or registration number and admin menu display
   Note: When the logged-in user is an admin, the management option appears in the side menu.
 
   Background:
-    Given I am on the CAMAAR login page
+    Given the user is on the login page
 
   Scenario: [Happy Path] Login with valid email
-    Given a regular user exists with email "user@unb.br" and password "Senha123"
-    When I fill the identification field with "user@unb.br"
-    And I fill the password field with "Senha123"
-    And I click the "Login" button
-    Then I should be redirected to the CAMAAR dashboard
+    Given there is a user with email "user@unb.br" and password "Senha123"
+    And the user is on the login page
+    When the user fills "user@unb.br" in the username field
+    And the user fills "Senha123" in the password field
+    And the user clicks "Log in" button
+    Then the user should be redirected to the dashboard
 
   Scenario: Admin menu visible for admin
-    Given an administrator exists with email "admin@unb.br" and password "AdminPass"
-    When I fill the identification field with "admin@unb.br"
-    And I fill the password field with "AdminPass"
-    And I click the "Login" button
-    Then I should see the "Management" option in the side menu
+    Given there is an administrator with email "admin@unb.br" and password "AdminPass"
+    When the user fills "admin@unb.br" in the username field
+    And the user fills "AdminPass" in the password field
+    And the user clicks "Log in" button
+    Then the user should see "Templates"
 
   Scenario: Admin menu hidden for regular user
-    Given a regular user exists with email "user@unb.br" and password "Senha123"
-    When I fill the identification field with "user@unb.br"
-    And I fill the password field with "Senha123"
-    And I click the "Login" button
-    Then I should not see the "Management" option in the side menu
+    Given there is a user with email "user@unb.br" and password "Senha123"
+    When the user fills "user@unb.br" in the username field
+    And the user fills "Senha123" in the password field
+    And the user clicks "Log in" button
+    Then the user should not see "Templates"
 
   Scenario: [Sad Path] Invalid credentials
-    When I fill the identification field with "user@unb.br"
-    And I fill the password field with "SenhaErrada"
-    And I click the "Login" button
-    Then I should see the error message "Identificação ou senha inválida"
+    When the user fills "user@unb.br" in the username field
+    And the user fills "SenhaErrada" in the password field
+    And the user clicks "Log in" button
+    Then I should see the message "Invalid email or password"
