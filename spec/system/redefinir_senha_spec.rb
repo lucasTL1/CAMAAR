@@ -40,4 +40,25 @@ RSpec.describe "Redefinição de senha", type: :system do
 
     expect(page).to have_text("Your password has been changed successfully")
   end
+
+  it "exibe erro quando as senhas não coincidem durante a redefinição" do
+    user = User.create!(
+      nome: "Aluno Errado",
+      matricula: "190099999",
+      email: "erro@camaar.com",
+      password: "senha_antiga",
+      perfil: "discente"
+    )
+
+    token = user.send_reset_password_instructions
+
+    visit edit_user_password_path(reset_password_token: token)
+
+    fill_in "New password", with: "senha_nova_123"
+    fill_in "Confirm new password", with: "senha_diferente_456"
+    click_button "Change my password"
+
+    expect(page).to have_text("doesn't match")
+    expect(user.reload.valid_password?("senha_antiga")).to be true
+  end
 end

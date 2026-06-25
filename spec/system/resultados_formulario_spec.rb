@@ -36,4 +36,16 @@ RSpec.describe "Resultados e relatório do formulário", type: :system do
     expect(page.body).to include("Como foi a disciplina?")
     expect(page.body).to include("Foi ótima")
   end
+
+  it "garante que o aluno não veja os resultados de outros alunos" do
+    logout(:user)
+    login_as(@aluno, scope: :user)
+
+    visit formulario_path(@formulario)
+
+    # O aluno deve ver apenas a confirmação de que respondeu,
+    # e NÃO deve ver o texto "Resultados" ou as respostas de outros.
+    expect(page).not_to have_text("Resultados")
+    expect(page).not_to have_text("Foi ótima")
+  end
 end

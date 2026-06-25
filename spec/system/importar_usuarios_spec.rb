@@ -18,4 +18,13 @@ RSpec.describe "Importação de Usuários via CSV", type: :system do
     expect(page).to have_text("Lucas Aluno")
     expect(page).to have_text("Professor Roberto")
   end
+
+  it "exibe erro quando o arquivo enviado é inválido ou vazio" do
+    visit new_user_path
+
+    click_button 'Importar e Enviar Convites'
+
+    expect(page).to have_text("Nenhum arquivo selecionado")
+    expect(current_path).to eq(users_path) 
+  end
 end
