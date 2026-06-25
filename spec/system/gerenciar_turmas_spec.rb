@@ -44,4 +44,18 @@ RSpec.describe "Gerenciamento de Turmas por Departamento", type: :system do
     expect(page).not_to have_text("CÁLCULO 1")
     expect(page).not_to have_text("MAT0101")
   end
+
+  it "garante que o administrador não visualize turmas de outros departamentos na URL" do
+    visit new_user_session_path
+    fill_in "Email", with: @admin.email
+    fill_in "Password", with: @admin.password
+    click_button "Log in"
+
+    visit turmas_path
+
+    expect(page).to have_text("CIC0105")
+    
+    expect(page).not_to have_text("CÁLCULO 1")
+    expect(page).not_to have_text("MAT0101")
+  end
 end
