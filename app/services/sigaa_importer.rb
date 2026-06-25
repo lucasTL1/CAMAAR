@@ -1,12 +1,4 @@
 # Importa turmas, disciplinas e participantes a partir dos JSONs do SIGAA
-# (issues #4 "Importar dados do SIGAA" e #14 "Atualizar base de dados").
-#
-# Uso:
-#   classes  = JSON.parse(File.read("classes.json"))
-#   members  = JSON.parse(File.read("class_members.json"))
-#   SigaaImporter.call(classes: classes, members: members)
-#
-# Idempotente: rodar novamente não duplica turmas, usuários ou matrículas.
 class SigaaImporter
   def self.call(classes:, members:)
     new(classes, members).call
@@ -18,29 +10,40 @@ class SigaaImporter
     @counts  = { turmas: 0, users: 0, enrollments: 0 }
   end
 
+  # a. Descrição: Executa a importação dos dados de classes e membros.
+  # b. Argumentos: Nenhum.
+  # c. Retorno: Hash com as contagens de turmas, usuários e matrículas.
+  # d. Efeitos colaterais: Altera o banco de dados (inserções/atualizações).
   def call
-    @classes.each { |c| upsert_turma(c["code"], c["name"], c.dig("class", "classCode"), c.dig("class", "semester"), c.dig("class", "time")) }
-
-    @members.each do |m|
-      turma = upsert_turma(m["code"], m["code"], m["classCode"], m["semester"], nil)
-
-      Array(m["dicente"]).each { |d| upsert_user_and_enroll(d, turma, "discente") }
-
-      docente = m["docente"]
-      upsert_user_and_enroll(docente, turma, "docente") if docente.present?
-    end
-
+    importar_turmas
+    importar_membros
     @counts
   end
 
   private
 
+  def importar_turmas
+    @classes.each do |c|
+      upsert_turma(c["code"], c["name"], c.dig("class", "classCode"), c.dig("class", "semester"), c.dig("class", "time"))
+    end
+  end
+
+  def importar_membros
+    @members.each do |m|
+      turma = upsert_turma(m["code"], m["code"], m["classCode"], m["semester"], nil)
+      processar_participantes(m, turma)
+    end
+  end
+
+  def processar_participantes(data, turma)
+    Array(data["dicente"]).each { |d| upsert_user_and_enroll(d, turma, "discente") }
+    upsert_user_and_enroll(data["docente"], turma, "docente") if data["docente"].present?
+  end
+
   def upsert_turma(code, name, class_code, semester, time)
     turma = Turma.find_or_initialize_by(code: code, class_code: class_code, semester: semester)
     if turma.new_record?
-      turma.name = name
-      turma.time = time
-      turma.save!
+      turma.update!(name: name, time: time)
       @counts[:turmas] += 1
     elsif time.present? && turma.time.blank?
       turma.update!(time: time)
@@ -49,26 +52,24 @@ class SigaaImporter
   end
 
   def upsert_user_and_enroll(data, turma, role)
+    user = encontrar_ou_criar_usuario(data, role)
+    enrollment = Enrollment.find_or_initialize_by(user: user, turma: turma)
+    
+    if enrollment.new_record?
+      enrollment.update!(role: role)
+      @counts[:enrollments] += 1
+    end
+    enrollment
+  end
+
+  def encontrar_ou_criar_usuario(data, role)
     matricula = data["matricula"].presence || data["usuario"].presence
     user = User.find_by(matricula: matricula) || User.find_by(email: data["email"])
 
     unless user
-      # invite! cria o usuário e envia o e-mail de definição de senha (issue #5)
-      user = User.invite!(
-        nome: data["nome"],
-        email: data["email"],
-        matricula: matricula,
-        perfil: role
-      )
+      user = User.invite!(nome: data["nome"], email: data["email"], matricula: matricula, perfil: role)
       @counts[:users] += 1
     end
-
-    enrollment = Enrollment.find_or_initialize_by(user: user, turma: turma)
-    if enrollment.new_record?
-      enrollment.role = role
-      enrollment.save!
-      @counts[:enrollments] += 1
-    end
-    enrollment
+    user
   end
 end

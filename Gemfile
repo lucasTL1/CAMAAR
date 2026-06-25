@@ -73,3 +73,5 @@ end
 gem "devise"
 gem "devise_invitable"
 gem "csv"
+
+gem "rubycritic", "~> 5.0", groups: [:development, :test]
