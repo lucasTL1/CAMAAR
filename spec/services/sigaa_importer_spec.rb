@@ -43,4 +43,14 @@ RSpec.describe SigaaImporter do
     expect(User.count).to eq(2)
     expect(Enrollment.count).to eq(2)
   end
+
+  context "Sad Path" do
+    it "não quebra o sistema e retorna contagem zero se receber dados vazios" do
+      counts = SigaaImporter.call(classes: [], members: [])
+
+      expect(counts).to eq(turmas: 0, users: 0, enrollments: 0)
+      expect(Turma.count).to eq(0)
+      expect(User.count).to eq(0)
+    end
+  end
 end
