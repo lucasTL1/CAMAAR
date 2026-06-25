@@ -24,8 +24,10 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% flash.each do |type, message| %>
+      <% css = (type.to_s == "notice") ? "alert-success" : "alert-danger" %>
+      <div class="alert <%= css %> <%= type %>"><%= message %></div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

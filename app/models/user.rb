@@ -1,4 +1,7 @@
 class User < ApplicationRecord
+  # Step definitions (BDD) usam "department"; o banco usa "departamento".
+  alias_attribute :department, :departamento
+
   # O devise_invitable cuida do envio do e-mail para definição de senha
   devise :invitable, :database_authenticatable, :recoverable, :rememberable, :validatable
 

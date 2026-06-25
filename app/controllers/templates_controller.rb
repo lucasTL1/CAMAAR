@@ -43,6 +43,11 @@ class TemplatesController < ApplicationController
 
   # DELETE /templates/:id
   def destroy
+    # Só exclui quando a caixa de confirmação foi marcada (cancelar mantém).
+    unless params[:confirmar].present?
+      redirect_to templates_path and return
+    end
+
     @template.destroy
     redirect_to templates_path, notice: "Template removido com sucesso."
   end

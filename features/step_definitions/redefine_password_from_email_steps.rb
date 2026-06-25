@@ -1,6 +1,12 @@
 Given("I have a registered account with the email {string}") do |email|
   @registered_email = email
-  User.find_or_create_by(email: email) { |u| u.password = "OriginalPass123" }
+  user = User.find_or_initialize_by(email: email)
+  user.nome = "Usuario" if user.nome.blank?
+  user.matricula = "222222222" if user.matricula.blank?
+  user.perfil = "discente"
+  user.password = "OriginalPass123"
+  user.password_confirmation = "OriginalPass123"
+  user.save!
 end
 
 Given("I have requested a password reset for {string}") do |email|

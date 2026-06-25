@@ -12,7 +12,8 @@ RSpec.describe "Importação de Usuários via CSV", type: :system do
 
     click_button 'Importar e Enviar Convites'
 
-    expect(current_path).to eq(users_path)
+    # Após importar, redireciona para a home (root), que lista os usuários.
+    expect(current_path).to eq(root_path)
     expect(page).to have_text("Usuários importados e convites enviados com sucesso!")
 
     expect(page).to have_text("Lucas Aluno")
@@ -25,6 +26,6 @@ RSpec.describe "Importação de Usuários via CSV", type: :system do
     click_button 'Importar e Enviar Convites'
 
     expect(page).to have_text("Nenhum arquivo selecionado")
-    expect(current_path).to eq(users_path) 
+    expect(current_path).to eq(root_path)
   end
 end

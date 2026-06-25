@@ -1,4 +1,8 @@
 class Turma < ApplicationRecord
+  # Os step definitions (BDD) usam o nome em inglês "department"; o banco usa
+  # "departamento". O alias mantém ambos funcionando em queries e setters.
+  alias_attribute :department, :departamento
+
   has_many :enrollments, dependent: :destroy
   has_many :users, through: :enrollments
   has_many :formularios, dependent: :destroy

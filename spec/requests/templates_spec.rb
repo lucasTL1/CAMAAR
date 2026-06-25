@@ -80,7 +80,8 @@ RSpec.describe "Templates", type: :request do
   describe "DELETE /templates/:id" do
     it "remove o template do banco de dados e redireciona (Happy Path)" do
       expect {
-        delete template_path(template_existente)
+        # A exclusão agora exige a confirmação marcada (caixa "Remover").
+        delete template_path(template_existente), params: { confirmar: "1" }
       }.to change(Template, :count).by(-1)
       
       expect(response).to redirect_to(templates_path)

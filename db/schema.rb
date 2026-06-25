@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_16_140643) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_25_000003) do
   create_table "enrollments", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "role", default: "discente", null: false
@@ -31,6 +31,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_140643) do
     t.datetime "updated_at", null: false
     t.index ["template_id"], name: "index_formularios_on_template_id"
     t.index ["turma_id"], name: "index_formularios_on_turma_id"
+  end
+
+  create_table "password_reset_usages", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["token"], name: "index_password_reset_usages_on_token", unique: true
+  end
+
+  create_table "pending_registrations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "email", null: false
+    t.string "matricula"
+    t.string "nome"
+    t.string "perfil", default: "discente"
+    t.string "token", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_pending_registrations_on_email"
+    t.index ["token"], name: "index_pending_registrations_on_token", unique: true
   end
 
   create_table "questions", force: :cascade do |t|
@@ -71,6 +90,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_16_140643) do
     t.datetime "created_at", null: false
     t.string "departamento"
     t.string "name", null: false
+    t.string "professor"
     t.string "semester", null: false
     t.string "time"
     t.datetime "updated_at", null: false

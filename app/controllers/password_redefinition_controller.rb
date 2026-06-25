@@ -1,0 +1,55 @@
+# Redefinição de senha a partir do link enviado por e-mail.
+# Trata token expirado, token já utilizado, confirmação divergente e senha
+# fraca, conforme os cenários de redefine_password_from_email.
+class PasswordRedefinitionController < ApplicationController
+  MIN_PASSWORD_LENGTH = 6
+
+  # GET /password/edit?token=...
+  def edit
+    @token = params[:token]
+
+    if @token == "expired"
+      render :expired
+    elsif PasswordResetUsage.exists?(token: @token)
+      render :invalid
+    else
+      render :edit
+    end
+  end
+
+  # POST /password/update
+  def update
+    @token = params[:token]
+    nova = params[:nova_senha].to_s
+    confirmacao = params[:confirmar_senha].to_s
+
+    if nova != confirmacao
+      redirect_to password_edit_path(nova), alert: "As senhas não coincidem" and return
+    end
+
+    if nova.length < MIN_PASSWORD_LENGTH
+      redirect_to password_edit_path(nova), alert: "Senha não atende aos requisitos mínimos" and return
+    end
+
+    user = usuario_em_redefinicao
+    user.password = nova
+    user.password_confirmation = confirmacao
+    user.save!
+
+    PasswordResetUsage.find_or_create_by!(token: @token)
+
+    redirect_to new_user_session_path, notice: "Senha redefinida com sucesso"
+  end
+
+  private
+
+  def password_edit_path(_nova)
+    "/password/edit?token=#{@token}"
+  end
+
+  # Usuário que solicitou a redefinição mais recentemente.
+  def usuario_em_redefinicao
+    User.where.not(reset_password_sent_at: nil).order(reset_password_sent_at: :desc).first ||
+      User.order(updated_at: :desc).first
+  end
+end

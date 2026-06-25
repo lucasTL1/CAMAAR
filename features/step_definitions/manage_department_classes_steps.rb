@@ -1,9 +1,14 @@
 Given("I am logged in as an admin user from the department {string}") do |department|
   @admin_department = department
-  user = User.find_or_create_by(email: "admin@camaar.com") do |u|
-    u.perfil = "docente"
-    # u.department = department
-  end
+  user = User.find_or_initialize_by(email: "admin@camaar.com")
+  user.nome = "Administrador" if user.nome.blank?
+  user.matricula = "000000001" if user.matricula.blank?
+  user.perfil = "docente"
+  user.department = department
+  user.password = "password123"
+  user.password_confirmation = "password123"
+  user.save!
+
   visit(new_user_session_path)
   fill_in('Email', with: user.email)
   fill_in('Password', with: 'password123')
@@ -21,6 +26,7 @@ And("the following classes exist:") do |table|
       k.name = row["name"]
       k.department = row["department"]
       k.semester = row["semester"]
+      k.class_code = row["class_code"].presence || "TA"
     end
   end
 end
@@ -88,4 +94,8 @@ end
 
 Given("the department {string} has no classes in semester {string}") do |department, semester|
   Turma.where(department: department, semester: semester).destroy_all
+end
+
+Then("I should see a message {string}") do |message|
+  expect(page).to have_content(message)
 end

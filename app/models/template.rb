@@ -1,4 +1,8 @@
 class Template < ApplicationRecord
+  # Ordem importa: as respostas têm FK para questions. Os formulários (e suas
+  # respostas) precisam ser destruídos ANTES das questions, senão a remoção
+  # das questions viola a FK das respostas. Por isso :formularios vem primeiro.
+  has_many :formularios, dependent: :destroy
   has_many :questions, dependent: :destroy, inverse_of: :template
   accepts_nested_attributes_for :questions,
                                 allow_destroy: true,

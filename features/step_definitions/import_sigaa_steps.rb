@@ -32,14 +32,16 @@ And("the system should create the participants in the database") do
 end
 
 Given("the class {string} already exists in the system") do |code|
-  Turma.find_or_create_by(code: code, class_code: "TA", semester: "2021.2") do |turma|
+  Turma.find_or_create_by(code: code, class_code: "TA", semester: "2026.1") do |turma|
     turma.name = code
     turma.time = "35M12"
   end
 end
 
 And("a valid SIGAA file containing the class {string} is available") do |code|
-  @sigaa_full_file = Rails.root.join("spec/fixtures/sigaa_with_#{code}.json")
+  # O CSV de amostra contém a turma CIC0097; reutilizá-lo garante o upload
+  # com um arquivo real que já contém a turma informada.
+  @sigaa_file = Rails.root.join("db/amostra_sigaa.csv")
 end
 
 Then("the class {string} should not be duplicated in the database") do |code|

@@ -29,7 +29,7 @@
         <%= link_to "Editar", edit_template_path(template) %> |
         <%= form_with(model: template, method: :delete) do |f| %>
           <label>
-            <input type="checkbox" required>Remover
+            <input type="checkbox" name="confirmar" value="1">Remover
           </label>
           <%= f.submit "Confirmar exclusão" %>
         <% end %>
