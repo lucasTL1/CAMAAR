@@ -56,7 +56,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_25_000003) do
     t.datetime "created_at", null: false
     t.text "enunciado", null: false
     t.text "opcoes"
-    t.integer "template_id", null: false
+    t.integer "template_id"
     t.string "tipo", default: "discursiva", null: false
     t.datetime "updated_at", null: false
     t.index ["template_id"], name: "index_questions_on_template_id"

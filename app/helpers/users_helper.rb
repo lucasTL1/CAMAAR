@@ -1,3 +1,4 @@
+#:nodoc:
 module UsersHelper
   # Usuário convidado que ainda não aceitou o convite aparece como pendente;
   # demais (com senha definida) aparecem como ativos.

@@ -1,3 +1,5 @@
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'capybara/cucumber'
 require 'cucumber/rails'
 require 'database_cleaner'

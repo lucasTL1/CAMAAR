@@ -1,3 +1,13 @@
+##
+# Define a model User, representando um usuário do sistema, com suas associações, validações e métodos auxiliares, usando o Devise.
+# == Schema:
+#  * id: integer, primary key
+#  * nome: string, nome do usuário
+#  * matricula: string, matrícula do usuário
+#  * email: string, e-mail do usuário
+#  * encrypted_password: string, senha criptografada (Devise)
+#  * perfil: string, perfil do usuário (docente ou discente)
+#  * departamento: string, departamento do usuário
 class User < ApplicationRecord
   # Step definitions (BDD) usam "department"; o banco usa "departamento".
   alias_attribute :department, :departamento
@@ -16,13 +26,12 @@ class User < ApplicationRecord
   has_many :turmas, through: :enrollments
   has_many :respostas, dependent: :destroy
 
-  # Docente atua como administrador/gestor; discente apenas responde
-  def docente?
+  def docente? #:nodoc:
     perfil == "docente"
   end
   alias_method :admin?, :docente?
 
-  def discente?
+  def discente? #:nodoc:
     perfil == "discente"
   end
 

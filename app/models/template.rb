@@ -1,3 +1,8 @@
+## 
+# Define a model para representar um template de formulário, incluindo validações e métodos auxiliares para gerenciar questões associadas, incluindo validação de FK nas operações.
+# == Schema:
+#  * id: integer, primary key
+#  * nome: string, nome do template
 class Template < ApplicationRecord
   # Ordem importa: as respostas têm FK para questions. Os formulários (e suas
   # respostas) precisam ser destruídos ANTES das questions, senão a remoção
@@ -10,7 +15,7 @@ class Template < ApplicationRecord
 
   validates :nome, presence: true
 
-  # Busca por nome (issue #1 "Buscar template"). Filtra a listagem quando
+  # Busca por nome. Filtra a listagem quando
   # houver termo; sem termo, retorna todos.
   scope :search, ->(termo) {
     if termo.present?

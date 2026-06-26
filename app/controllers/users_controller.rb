@@ -1,16 +1,24 @@
 require "csv"
 require "json"
 
+##
+# Define a controller para gerenciar usuários, incluindo listagem, criação via convite, importação de participantes do SIGAA e envio de convites para definição de senha.
 class UsersController < ApplicationController
+  ##
+  # a. Descrição: Lista todos os usuários e registros pendentes de participantes.
+  # b. Argumentos: Nenhum.
+  # c. Retorno: Não há retorno.
+  # d. Efeitos colaterais: Atribui as variáveis de instância @users e @pending_registrations.
   def index
     @users = User.all
     @pending_registrations = PendingRegistration.all
   end
 
-  def new
-  end
-
-  # POST /users  (cadastro de um único usuário — register_users)
+  ##
+  # a. Descrição: Cria um novo usuário via convite, enviando e-mail para definição de senha.
+  # b. Argumentos: Recebe 'nome', 'email', 'matricula' e 'perfil' como parâmetros.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Cria o usuário no banco de dados e envia um e-mail de convite para definição de senha, ou redireciona com mensagem de erro caso o e-mail já esteja em uso.
   def create
     email = params[:email].to_s.downcase
 
@@ -30,9 +38,11 @@ class UsersController < ApplicationController
     redirect_to "/usuarios/novo", alert: "Erro ao cadastrar usuário: #{e.message}"
   end
 
-  # POST /users/register_participants  (register_from_sigaa)
-  # Cria solicitações de cadastro e envia e-mail de definição de senha,
-  # ignorando participantes que já possuem conta.
+  ##
+  # a. Descrição: Registra participantes a partir de um arquivo JSON, enviando convites para definição de senha.
+  # b. Argumentos: Recebe 'participants_file' (JSON) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Cria registros pendentes de usuários no banco de dados e envia e-mails de convite para definição de senha, ou redireciona com mensagem de erro caso o arquivo não seja fornecido.
   def register_participants
     participantes = parse_json(params[:participants_file], "spec/fixtures/sigaa_participant_maria.json")
 
@@ -60,25 +70,19 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: mensagem_registro(criados, ignorados)
   end
 
-  # GET /users/sigaa - formulário de importação dos JSONs do SIGAA (issue #4)
+  ##
+  # a. Descrição: Faz a importação dos JSONs do SIGAA.
+  # b. Argumentos: Recebe 'sigaa_users_file' (JSON) e 'sigaa_enrollments_file' (JSON) como parâmetros.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Cria ou atualiza usuários e matrículas no banco de dados.
   def sigaa
   end
 
-  # POST /users/sigaa_import
-  def sigaa_import
-    classes = parse_json(params[:classes_file], "classes.json")
-    members = parse_json(params[:members_file], "class_members.json")
-
-    counts = SigaaImporter.call(classes: classes, members: members)
-
-    redirect_to users_path,
-      notice: "SIGAA importado: #{counts[:turmas]} turmas, #{counts[:users]} usuários e #{counts[:enrollments]} matrículas."
-  rescue => e
-    redirect_to sigaa_users_path, alert: "Falha ao importar dados do SIGAA: #{e.message}"
-  end
-
-  # POST /users/import - importa turmas, participantes e matrículas a partir
-  # de um CSV do SIGAA. Cria os usuários via convite (definição de senha).
+  ##
+  # a. Descrição: Importa usuários e matrículas a partir de um arquivo CSV, enviando convites para definição de senha.
+  # b. Argumentos: Recebe 'file' (CSV) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Cria ou atualiza turmas, usuários e matrículas no banco de dados, e envia e-mails de convite para definição de senha, ou redireciona com mensagem de erro caso o arquivo não seja fornecido.
   def import
     file = params[:file]
     return redirect_to root_path, alert: "Nenhum arquivo selecionado" unless file
@@ -94,6 +98,11 @@ class UsersController < ApplicationController
 
   private
 
+  ##
+  # a. Descrição: Gera uma mensagem de registro com informações sobre os usuários criados e ignorados.
+  # b. Argumentos: Recebe 'criados' (Array) e 'ignorados' (Array) como parâmetros.
+  # c. Retorno: Retorna a mensagem de registro gerada (String).
+  # d. Efeitos colaterais: Nenhum.
   def mensagem_registro(criados, ignorados)
     partes = []
     partes << "Convites enviados para: #{criados.join(', ')}" if criados.any?
@@ -101,7 +110,11 @@ class UsersController < ApplicationController
     partes.join(". ")
   end
 
-  # Cria/recupera a turma a partir das colunas do CSV (quando presentes)
+  ##
+  # a. Descrição: Cria/recupera a turma a partir das colunas do CSV (quando presentes)
+  # b. Argumentos: Recebe 'row' (Hash) como parâmetro.
+  # c. Retorno: Retorna a turma encontrada ou criada (Turma).
+  # d. Efeitos colaterais: Nenhum.
   def importar_turma(row)
     code = row["turma_code"]
     return nil if code.blank?
@@ -116,7 +129,11 @@ class UsersController < ApplicationController
     end
   end
 
-  # Cria o usuário via convite, evitando duplicatas
+  ##
+  # a. Descrição: Cria/recupera o usuário a partir das colunas do CSV (quando presentes)
+  # b. Argumentos: Recebe 'row' (Hash) como parâmetro.
+  # c. Retorno: Retorna o usuário encontrado ou criado (User).
+  # d. Efeitos colaterais: Nenhum.
   def importar_usuario(row)
     return User.find_by(email: row["email"]) if User.exists?(email: row["email"])
 
@@ -128,6 +145,11 @@ class UsersController < ApplicationController
     )
   end
 
+  ##
+  # a. Descrição: Cria/recupera a matrícula do usuário na turma, com base no perfil fornecido.
+  # b. Argumentos: Recebe 'user' (User), 'turma' (Turma) e 'perfil' (String) como parâmetros.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Cria a matrícula do usuário na turma, com o papel correspondente ao perfil fornecido.
   def matricular(user, turma, perfil)
     role = (perfil == "docente") ? "docente" : "discente"
     Enrollment.find_or_create_by!(user: user, turma: turma) { |e| e.role = role }

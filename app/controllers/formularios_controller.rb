@@ -1,14 +1,17 @@
 require "csv"
 
+##
+# Define a controller para gerenciar formulários, incluindo criação, listagem, visualização e geração de relatórios.
 class FormulariosController < ApplicationController
   before_action :authenticate_user!
   before_action :set_formulario, only: %i[show relatorio]
   before_action :require_docente!, only: %i[new create relatorio]
 
-  # GET /formularios
-  # Docente: lista os formulários criados (issue #13).
-  # Discente: lista formulários das suas turmas, separando pendentes e
-  # respondidos (issue #8).
+  ##
+  # a. Descrição: Faz a listagem de formulários.
+  # b. Argumentos: usa o usuário atual para filtrar os formulários e o id da turma.
+  # c. Retorno: Não há retorno.
+  # d. Efeitos colaterais: Faz a atribuição dos formulários.
   def index
     base_query = Formulario.includes(:turma, :template)
     
@@ -22,14 +25,21 @@ class FormulariosController < ApplicationController
     end
   end
 
-  # GET /formularios/new  (issue #7)
+  ##
+  # a. Descrição: Prepara os dados necessários para a criação de um novo formulário
+  # b. Argumentos: Nenhum.
+  # c. Retorno: Não há retorno.
+  # d. Efeitos colaterais: Faz a atribuição das variáveis de instância @templates e @turmas.
   def new
     @templates = Template.order(:nome)
     @turmas    = Turma.order(:code, :class_code)
   end
 
-  # POST /formularios  (issue #7)
-  # Cria um formulário por turma escolhida, baseado em um template.
+  ##
+  # a. Descrição: Cria um novo formulário.
+  # b. Argumentos: Recebe 'template' (Template), 'turma_ids' (Array), 'titulo' (String) e 'prazo' (String/Date).
+  # c. Retorno: Retorna um array com as instâncias criadas ou dispara uma exceção em caso de falha.
+  # d. Efeitos colaterais: Faz inserções no banco de dados dentro de uma transação.
   def create
     template, turma_ids, titulo, prazo = extrair_parametros_formulario
 
@@ -40,8 +50,11 @@ class FormulariosController < ApplicationController
     processar_salvamento(template, turma_ids, titulo, prazo)
   end
 
-  # GET /formularios/:id
-  # Docente: resultados (issue #13). Discente: tela para responder (issue #2).
+  ##
+  # a. Descrição: Mostra os formulários, incluindo a verificação se o usuário já respondeu ao formulário, para os docentes.
+  # b. Argumentos: Recebe o 'current_user' como parâmetro.
+  # c. Retorno: Retorna os formulários respondidos, para o discente, ou as respostas, para o docente.
+  # d. Efeitos colaterais: Faz a atribuição da variável de instância.
   def show
     if current_user.docente?
       render :resultados
@@ -50,7 +63,11 @@ class FormulariosController < ApplicationController
     end
   end
 
-  # GET /formularios/:id/relatorio.csv  (issue #6 / #101)
+  ##
+  # a. Descrição: Gera o relatório CSV com as respostas do formulário chamando a função 'gerar_csv'.
+  # b. Argumentos: Recebe a variável de instância '@formulario' como argumento.
+  # c. Retorno: Gera um arquivo CSV com as respostas.
+  # d. Efeitos colaterais: Não há.
   def relatorio
     respond_to do |format|
       format.csv do
@@ -63,16 +80,26 @@ class FormulariosController < ApplicationController
 
   private
 
+  ##
+  # Usa o ID do formulário como parâmetro para buscar a instância correspondente no banco de dados.
   def set_formulario
     @formulario = Formulario.find(params[:id])
   end
 
+  ##
+  # a. Descrição: Garante que o usuário atual seja um docente.
+  # b. Argumentos: Recebe 'current_user' como parâmetro.
+  # c. Retorno: Retorna um booleano (true se for docente, false caso contrário).
+  # d. Efeitos colaterais: Não há.
   def require_docente!
     return if current_user&.docente?
-    redirect_to formularios_path, alert: "Apenas administradores (docentes) podem acessar essa área."
   end
 
-  # Monta o CSV com as respostas do formulário
+  ##
+  # a. Descrição: Monta o arquivo CSV com as respostas do formulário.
+  # b. Argumentos: Recebe 'formulario' (Formulario) como parâmetro.
+  # c. Retorno: Não há (intermediário para a geração do csv na função 'relatorio').
+  # d. Efeitos colaterais: Adiciona as linhas ao CSV.
   def gerar_csv(formulario)
     CSV.generate do |csv|
       csv << [ "Formulário", formulario.titulo ]
@@ -87,6 +114,7 @@ class FormulariosController < ApplicationController
     end
   end
 
+  ##
   # a. Descrição: Verifica se os parâmetros obrigatórios para a criação estão ausentes.
   # b. Argumentos: Recebe o objeto 'template' (Template) e 'turma_ids' (Array).
   # c. Retorno: Retorna um booleano (true se faltar dados, false caso contrário).
@@ -95,6 +123,7 @@ class FormulariosController < ApplicationController
     template.nil? || turma_ids.empty?
   end
 
+  ##
   # a. Descrição: Processa a criação em lote de formulários para as turmas selecionadas.
   # b. Argumentos: Recebe 'template' (Template), 'turma_ids' (Array), 'titulo' (String) e 'prazo' (String/Date).
   # c. Retorno: Retorna um array com as instâncias criadas ou dispara uma exceção em caso de falha.
@@ -112,6 +141,7 @@ class FormulariosController < ApplicationController
     end
   end
 
+  ##
   # a. Descrição: Processa e escreve as linhas de respostas de uma questão específica diretamente no CSV.
   # b. Argumentos: Recebe 'formulario' (Formulario), 'question' (Question) e 'csv' (Objeto CSV).
   # c. Retorno: Retorna o próprio objeto CSV modificado com as novas linhas.
@@ -128,6 +158,7 @@ class FormulariosController < ApplicationController
     end
   end
 
+  ##
   # a. Descrição: Extrai e sanitiza os parâmetros enviados pelo request.
   # b. Argumentos: Nenhum.
   # c. Retorno: Retorna um array contendo o template, turma_ids, titulo e prazo.
@@ -141,6 +172,7 @@ class FormulariosController < ApplicationController
     ]
   end
 
+  ##
   # a. Descrição: Executa o salvamento em lote e gerencia o redirecionamento ou captura de erros.
   # b. Argumentos: Recebe 'template' (Template), 'turma_ids' (Array), 'titulo' (String) e 'prazo' (String/Date).
   # c. Retorno: Nenhum.

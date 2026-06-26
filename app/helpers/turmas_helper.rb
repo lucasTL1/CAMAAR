@@ -1,2 +1,2 @@
-module TurmasHelper
+module TurmasHelper #:nodoc:
 end

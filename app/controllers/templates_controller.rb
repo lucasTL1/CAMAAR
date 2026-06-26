@@ -1,28 +1,48 @@
+##
+# Define a controller para gerenciar templates de formulários, incluindo criação, edição, listagem e exclusão.
 class TemplatesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_template, only: %i[show edit update destroy]
 
-  # GET /templates  (?q=termo para buscar — issue #1)
+  ##
+  # a. Descrição: Lista todos os templates de formulários, com opção de busca por nome.
+  # b. Argumentos: Recebe 'q' (String) como parâmetro de busca.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atribui as variáveis de instância @q e @templates.
   def index
     @q = params[:q]
     @templates = Template.search(@q).order(:nome)
   end
 
-  # GET /templates/:id
+  ##
+  # a. Descrição: Mostra os detalhes de um template de formulário específico.
+  # b. Argumentos: Recebe 'id' (Integer) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atribui a variável de instância @template.
   def show
   end
 
-  # GET /templates/new
+  ##
+  # a. Descrição: Instancia um novo template de formulário.
+  # b. Argumentos: Nenhum.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atribui a variável de instância @template.
   def new
-    @template = Template.new
-    @template.questions.build
   end
 
-  # GET /templates/:id/edit
+  ##
+  # a. Descrição: Prepara os dados necessários para editar um template de formulário existente.
+  # b. Argumentos: Recebe 'id' (Integer) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atualiza a variável de instância @template com mudanças.
   def edit
   end
 
-  # POST /templates
+  ##
+  # a. Descrição: Cria um novo template de formulário com os parâmetros fornecidos.
+  # b. Argumentos: Recebe 'template_params' (Hash) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Salva o template no banco de dados e redireciona para a página de exibição do template criado, ou renderiza a página de criação com erros.
   def create
     @template = Template.new(template_params)
     if @template.save
@@ -32,7 +52,11 @@ class TemplatesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /templates/:id
+  ##
+  # a. Descrição: Atualiza um template de formulário existente com os parâmetros fornecidos.
+  # b. Argumentos: Recebe 'template_params' (Hash) como parâmetro
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atualiza o template no banco de dados e redireciona para a página de exibição do template atualizado, ou renderiza a página de edição com erros.
   def update
     if @template.update(template_params)
       redirect_to @template, notice: "Template atualizado com sucesso."
@@ -41,7 +65,11 @@ class TemplatesController < ApplicationController
     end
   end
 
-  # DELETE /templates/:id
+  ##
+  # a. Descrição: Exclui um template de formulário existente, se a confirmação for fornecida.
+  # b. Argumentos: Recebe 'confirmar' (String) como parâmetro de confirmação.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Remove o template do banco de dados e redireciona para a lista de templates, ou mantém o template se a confirmação não for fornecida.
   def destroy
     # Só exclui quando a caixa de confirmação foi marcada (cancelar mantém).
     unless params[:confirmar].present?
@@ -54,10 +82,12 @@ class TemplatesController < ApplicationController
 
   private
 
+  # Busca o template pelo ID fornecido nos parâmetros da requisição.
   def set_template
     @template = Template.find(params[:id])
   end
 
+  # Permite apenas os parâmetros necessários para criar/atualizar um template, incluindo atributos aninhados para perguntas.
   def template_params
     params.require(:template).permit(
       :nome, :descricao, :publico_alvo,

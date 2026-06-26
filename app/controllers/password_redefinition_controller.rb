@@ -1,10 +1,13 @@
-# Redefinição de senha a partir do link enviado por e-mail.
-# Trata token expirado, token já utilizado, confirmação divergente e senha
-# fraca, conforme os cenários de redefine_password_from_email.
+##
+# Redefinição de senha a partir do link enviado por e-mail. Trata token expirado, token já utilizado, confirmação divergente e senha fraca, conforme os cenários de redefine_password_from_email.
 class PasswordRedefinitionController < ApplicationController
   MIN_PASSWORD_LENGTH = 6
 
-  # GET /password/edit?token=...
+  ##
+  # a. Descrição: Permite a edição da senha a partir do token enviado por e-mail.
+  # b. Argumentos: Recebe 'token' (String) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Redireciona o usuário para a rota de login correspondente.
   def edit
     @token = params[:token]
 
@@ -17,7 +20,11 @@ class PasswordRedefinitionController < ApplicationController
     end
   end
 
-  # POST /password/update
+  ##
+  # a. Descrição: Faz a atualização da senha a partir do token enviado por e-mail.
+  # b. Argumentos: Recebe 'token' (String) como parâmetro.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Emite um alerta ou redireciona o usuário para o login, após salvar a entidade no BD.
   def update
     @token = params[:token]
     nova = params[:nova_senha].to_s
@@ -43,6 +50,8 @@ class PasswordRedefinitionController < ApplicationController
 
   private
 
+  ##
+  # Gera o caminho para a página de edição de senha, incluindo o token como parâmetro de consulta.
   def password_edit_path(_nova)
     "/password/edit?token=#{@token}"
   end
