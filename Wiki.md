@@ -87,3 +87,30 @@ Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveita
 
 ## Estratégia de *branching*:
 Para a Sprint 2, consolidamos as implementações na branch `sprint-2`. Os merges foram realizados e testados localmente, garantindo a integridade do sistema e a resolução de conflitos (incluindo chaves do Rails). [cite_start]Todos os testes RSpec [cite: 7] [cite_start]foram validados com 100% de sucesso antes da abertura do Pull Request[cite: 16].
+
+# Especificações da *Sprint* 3:
+**Product Owner**: Davi Brasileiro
+**Scrum Master**: Roberto Neto
+
+## Objetivos:
+### Refatorar o código para aceitação nos testes Cucumber / RSpec:
+Nessa etapa, dividimos as pastas de features BDD desenvolvidas no Capybara para refatorarmos o código e fazermos todos os testes passarem, como na estratégia do TDD (Red - Green - Refactor), evitando ao máximo alterar as features já definidas, limitando-nos a reduzir a redundância de _steps_ definidos para os testes, bem como a maior reusabilidade e desacoplamento de testes para maior confiabilidade.
+
+### Reduzir os Code Smells e outros indícios de código mau-otimizado:
+Rodamos gemas como o **Rubycritic** e **SimpleCov** para avaliar a complexidade de métodos, partes ineficientes do código e até mesmo a cobertura das funções do código por parte dos testes desenvolvidos, a fom de garantir que o código da aplicação fosse o mais robusto possível, com o mínimo de complexidade.
+
+### Produzir a documentação da aplicação:
+Nesse passo, nos valemos da gema **RDoc** para gerar páginas HTML interativas que cobrissem a documentação dos principais componentes do código, especialmente Models e Controllers, garantindo a melhor compreensão dos métodos e estruturas utilizadas para o funcionamento da aplicação, segundo as boas práticas especificadas no uso da gema, como formatação e seleção de itens documentados para melhor visualização.
+
+## Features Desenvolvidas:
+
+### Responsável: Lucas Teles Leiro
+
+### Responsável: Davi Brasileiro Gomes
+- **Refatoramento das pastas /forms, /results, /templates e /answerable_forms das features** : Implementação da etapa "Yellow" do TDD nas pastas, garantindo testes RSpec com êxito e a manutenção do funcionamento da aplicação;
+- **Geração da documentação com o RDoc**: Adequação dos comentários inseridos nos códigos da aplicação para o melhor funcionamento da gema, considerando necessidades do projeto e a boa compreensão dos componentes chave por meio das páginas HTML;
+
+### Responsável: Roberto Ribeiro Corrêa Neto
+
+## Estratégia de *branching*:
+Para a Sprint 3, consolidamos as implementações na branch `sprint-3`. Os merges foram realizados e testados localmente, garantindo a integridade do sistema e a resolução de conflitos (incluindo chaves do Rails). Como o propósito da sprint era a refatoração e a documentação, aproveitamos a estrutura do projeto já consolidada para apenas fazer Commits estratégicos e pontuais, com manutenção das funcionalidades desenvolvidas.
