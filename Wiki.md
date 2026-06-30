@@ -111,6 +111,39 @@ Nesse passo, nos valemos da gema **RDoc** para gerar páginas HTML interativas q
 - **Geração da documentação com o RDoc**: Adequação dos comentários inseridos nos códigos da aplicação para o melhor funcionamento da gema, considerando necessidades do projeto e a boa compreensão dos componentes chave por meio das páginas HTML;
 
 ### Responsável: Roberto Ribeiro Corrêa Neto
+- **Redução de complexidade (ABC Score) com RubyCritic**: Refatoração dos métodos com pontuação ABC alta (Extract Method), trazendo o maior valor do projeto de 31.0 para 18.3, com todos os métodos abaixo do limite de 20 exigido pela sprint;
+- **Eliminação de código duplicado nas controladoras**: Aplicação de _Move Method / Extract Class_ para mover a lógica duplicada de upsert de turmas, usuários e matrículas (presente em `UsersController` e `SigaaUpdatesController`) para os Models `Turma`, `User` e `Enrollment`, retirando o `UsersController` da nota D do RubyCritic (duplicação de 83 para 0);
+- **Implementação do serviço `SigaaImporter` (#14)**: Criação do `app/services/sigaa_importer.rb` (`SigaaImporter.call`) que importa turmas, usuários e matrículas do JSON do SIGAA de forma idempotente, destravando a suíte RSpec (que não carregava por falta da classe) e elevando a cobertura geral para 98.76%;
+- **Cobertura de testes RSpec com SimpleCov (Happy/Sad Path)**: Configuração do SimpleCov (merge RSpec/Cucumber) e criação de specs para todos os controllers/models/serviços/mailers, cobrindo Happy e Sad Path. Resultado: **96 exemplos RSpec, 0 falhas**, todos os componentes acima de 90% e os **53 cenários do Cucumber** intactos;
+
+## Resultados da Refatoração (antes × depois):
+
+### Complexidade — ABC Score por método (RubyCritic / Flog, limite < 20):
+
+| Método | Antes | Depois | Técnica |
+|--------|------:|-------:|---------|
+| `PendingRegistrationsController#update` | 31.0 | 17.6 | Extract Method (`atributos_do_usuario`) |
+| `UsersController#register_participants` | 30.1 | 11.7 | Extract Method (`processar_participante`, `registrar_pendente`) |
+| `UsersController#create` | 26.1 | 18.3 | Extract Method (`parametros_convite`) |
+| `PasswordRedefinitionController#update` | 24.1 | 14.0 | Extract Method (`redirecionar_se_invalida`, `redefinir_senha`) |
+| `FormulariosController#index` | 19.6 | 8.x | Extract Method (`carregar_formularios_do_discente`) |
+| `FormulariosController#gerar_csv` | 19.6 | 8.x | Extract Method (`escrever_cabecalho_csv`) |
+| **Maior ABC do projeto** | **31.0** | **18.3** | — |
+
+Duplicação de código no `UsersController`: **83 → 0** (lógica de upsert movida para os Models via _Move Method / Extract Class_), elevando a nota do arquivo de **D → C**. Score geral do RubyCritic: **91.55 → 93.59**.
+
+### Cobertura de testes (SimpleCov / RSpec, limite > 90%):
+
+| Componente | Antes | Depois |
+|-----------|------:|-------:|
+| Suíte RSpec | não carregava (0%) | **98.76%** |
+| Arquivos abaixo de 90% | ~11 | **0** |
+| `UsersController` | 53% | 100% |
+| `ResultadosController` | 62% | 100% |
+| `PendingRegistrationsController` | 55% | 100% |
+| `PasswordRedefinitionController` | 74% | 100% |
+| `SigaaImporter` (serviço) | 78% | 100% |
+| Menor cobertura do projeto | 0% | **91.67%** (`ApplicationController`) |
 
 ## Estratégia de *branching*:
 Para a Sprint 3, consolidamos as implementações na branch `sprint-3`. Os merges foram realizados e testados localmente, garantindo a integridade do sistema e a resolução de conflitos (incluindo chaves do Rails). Como o propósito da sprint era a refatoração e a documentação, aproveitamos a estrutura do projeto já consolidada para apenas fazer Commits estratégicos e pontuais, com manutenção das funcionalidades desenvolvidas.

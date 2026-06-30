@@ -56,46 +56,10 @@ class SigaaUpdatesController < ApplicationController
   # c. Retorno: Nenhum.
   # d. Efeitos colaterais: Cria ou atualiza turmas, usuários e matrículas na base de dados.
   def importar_linha(row)
-    turma = upsert_turma(row)
-    user  = upsert_user(row)
+    turma = Turma.upsert_from_row(row)
+    user  = User.find_or_invite_from_row(row)
     return unless user && turma
 
-    role = (row["perfil"] == "docente") ? "docente" : "discente"
-    Enrollment.find_or_create_by!(user: user, turma: turma) { |e| e.role = role }
-  end
-
-  ##
-  # a. Descrição: Faz upsert de uma turma com base nos dados da linha do CSV, criando-a se não existir.
-  # b. Argumentos: Recebe 'row' (Hash) como parâmetro.
-  # c. Retorno: Retorna a turma encontrada ou criada.
-  # d. Efeitos colaterais: Nenhum.
-  def upsert_turma(row)
-    code = row["turma_code"]
-    return nil if code.blank?
-
-    Turma.find_or_create_by!(
-      code: code,
-      class_code: row["class_code"].presence || "TA",
-      semester: row["semester"].presence || "2026.1"
-    ) do |t|
-      t.name = row["turma_name"].presence || code
-      t.department = row["departamento"]
-    end
-  end
-
-  ##
-  # a. Descrição: Faz upsert de um usuário com base nos dados da linha do CSV, criando-o se não existir.
-  # b. Argumentos: Recebe 'row' (Hash) como parâmetro.
-  # c. Retorno: Retorna o usuário encontrado ou criado.
-  # d. Efeitos colaterais: Nenhum.
-  def upsert_user(row)
-    return User.find_by(email: row["email"]) if User.exists?(email: row["email"])
-
-    User.invite!(
-      nome: row["nome"],
-      email: row["email"],
-      matricula: row["matricula"],
-      perfil: row["perfil"]
-    )
+    Enrollment.ensure_role(user: user, turma: turma, perfil: row["perfil"])
   end
 end

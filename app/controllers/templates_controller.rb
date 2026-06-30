@@ -28,6 +28,7 @@ class TemplatesController < ApplicationController
   # c. Retorno: Nenhum.
   # d. Efeitos colaterais: Atribui a variável de instância @template.
   def new
+    @template = Template.new
   end
 
   ##

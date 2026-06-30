@@ -20,23 +20,29 @@ class PendingRegistrationsController < ApplicationController
     @pending = PendingRegistration.find_by(token: params[:token])
     redirect_to root_path, alert: "Link inválido" and return if @pending.nil?
 
-    senha = params[:senha].to_s
-
-    User.create!(
-      email: @pending.email,
-      nome: @pending.nome.presence || @pending.email.split("@").first,
-      matricula: @pending.matricula.presence || gerar_matricula(@pending),
-      perfil: @pending.perfil.presence || "discente",
-      password: senha,
-      password_confirmation: senha
-    )
-
+    User.create!(atributos_do_usuario(@pending, params[:senha].to_s))
     @pending.destroy
 
     redirect_to users_path, notice: "Cadastro concluído com sucesso."
   end
 
   private
+
+  ##
+  # a. Descrição: Monta o hash de atributos do novo usuário a partir do registro pendente.
+  # b. Argumentos: Recebe 'pending' (PendingRegistration) e 'senha' (String).
+  # c. Retorno: Retorna um Hash com os atributos a serem usados na criação do usuário.
+  # d. Efeitos colaterais: Nenhum.
+  def atributos_do_usuario(pending, senha)
+    {
+      email: pending.email,
+      nome: pending.nome.presence || pending.email.split("@").first,
+      matricula: pending.matricula.presence || gerar_matricula(pending),
+      perfil: pending.perfil.presence || "discente",
+      password: senha,
+      password_confirmation: senha
+    }
+  end
 
   # Gera uma matrícula fictícia para o participante pendente, caso não tenha sido fornecida.
   def gerar_matricula(pending)

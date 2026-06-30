@@ -38,7 +38,7 @@ class ResultadosController < ApplicationController
   # c. Retorno: Retorna o formulário encontrado ou nil se não houver correspondência.
   # d. Efeitos colaterais: Nenhum.
   def encontrar_formulario(slug)
-    Formulario.includes(:respostas).find { |f| slugify(f.titulo) == slug }
+    Formulario.includes(:respostas).find { |formulario| slugify(formulario.titulo) == slug }
   end
 
   # Mesmo cálculo de slug usado nos cenários (acentos são removidos).

@@ -27,10 +27,12 @@ class RespostasController < ApplicationController
   # d. Efeitos colaterais: Interrompe o fluxo e redireciona a requisição caso o usuário não possa responder.
   def acesso_negado?(formulario)
     unless participante?(formulario)
+      redirect_to formularios_path, alert: "Você não está matriculado nesta turma."
       return true
     end
 
     if formulario.respondido_por?(current_user)
+      redirect_to formularios_path, alert: "Você já respondeu este formulário."
       return true
     end
 

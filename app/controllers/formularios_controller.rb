@@ -14,14 +14,11 @@ class FormulariosController < ApplicationController
   # d. Efeitos colaterais: Faz a atribuição dos formulários.
   def index
     base_query = Formulario.includes(:turma, :template)
-    
+
     if current_user.docente?
       @formularios = base_query.order(created_at: :desc)
     else
-      turma_ids = current_user.enrollments.discentes.pluck(:turma_id)
-      formularios = base_query.where(turma_id: turma_ids)
-      @pendentes   = formularios.reject { |form| form.respondido_por?(current_user) }
-      @respondidos = formularios - @pendentes
+      carregar_formularios_do_discente(base_query)
     end
   end
 
@@ -102,16 +99,37 @@ class FormulariosController < ApplicationController
   # d. Efeitos colaterais: Adiciona as linhas ao CSV.
   def gerar_csv(formulario)
     CSV.generate do |csv|
-      csv << [ "Formulário", formulario.titulo ]
-      csv << [ "Turma", formulario.turma.nome_completo ]
-      csv << [ "Respondentes", "#{formulario.total_respondentes} de #{formulario.total_participantes}" ]
-      csv << []
-      csv << [ "Questão", "Tipo", "Resposta" ]
+      escrever_cabecalho_csv(csv, formulario)
 
       formulario.questions.each do |question|
         processar_linhas_da_questao(formulario, question, csv)
       end
     end
+  end
+
+  ##
+  # a. Descrição: Escreve as linhas de cabeçalho (metadados e títulos das colunas) no CSV.
+  # b. Argumentos: Recebe 'csv' (Objeto CSV) e 'formulario' (Formulario).
+  # c. Retorno: Retorna o próprio objeto CSV modificado.
+  # d. Efeitos colaterais: Não altera o banco de dados, apenas injeta linhas no arquivo em memória.
+  def escrever_cabecalho_csv(csv, formulario)
+    csv << [ "Formulário", formulario.titulo ]
+    csv << [ "Turma", formulario.turma.nome_completo ]
+    csv << [ "Respondentes", "#{formulario.total_respondentes} de #{formulario.total_participantes}" ]
+    csv << []
+    csv << [ "Questão", "Tipo", "Resposta" ]
+  end
+
+  ##
+  # a. Descrição: Carrega e separa os formulários pendentes e respondidos do discente atual.
+  # b. Argumentos: Recebe 'base_query' (ActiveRecord::Relation) já com os includes necessários.
+  # c. Retorno: Nenhum.
+  # d. Efeitos colaterais: Atribui as variáveis de instância @pendentes e @respondidos.
+  def carregar_formularios_do_discente(base_query)
+    turma_ids = current_user.enrollments.discentes.pluck(:turma_id)
+    formularios = base_query.where(turma_id: turma_ids)
+    @pendentes   = formularios.reject { |form| form.respondido_por?(current_user) }
+    @respondidos = formularios - @pendentes
   end
 
   ##
@@ -166,10 +184,19 @@ class FormulariosController < ApplicationController
   def extrair_parametros_formulario
     [
       Template.find_by(id: params[:template_id]),
-      Array(params[:turma_ids]).reject(&:blank?),
+      turma_ids_selecionadas,
       params[:titulo].presence,
       params[:prazo].presence
     ]
+  end
+
+  ##
+  # a. Descrição: Lê e limpa a lista de turmas selecionadas, descartando valores em branco.
+  # b. Argumentos: Nenhum.
+  # c. Retorno: Retorna um array de ids de turma (Array).
+  # d. Efeitos colaterais: Nenhum.
+  def turma_ids_selecionadas
+    Array(params[:turma_ids]).reject(&:blank?)
   end
 
   ##

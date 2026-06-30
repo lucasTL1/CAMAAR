@@ -17,4 +17,14 @@ class Enrollment < ApplicationRecord
 
   scope :discentes, -> { where(role: "discente") }
   scope :docentes,  -> { where(role: "docente") }
+
+  ##
+  # a. Descrição: Garante a matrícula de um usuário em uma turma com o papel correspondente ao perfil.
+  # b. Argumentos: Recebe 'user' (User), 'turma' (Turma) e 'perfil' (String); perfis diferentes de "docente" viram "discente".
+  # c. Retorno: Retorna a Enrollment encontrada ou criada.
+  # d. Efeitos colaterais: Insere uma Enrollment no banco caso ainda não exista.
+  def self.ensure_role(user:, turma:, perfil:)
+    role = (perfil == "docente") ? "docente" : "discente"
+    find_or_create_by!(user: user, turma: turma) { |e| e.role = role }
+  end
 end

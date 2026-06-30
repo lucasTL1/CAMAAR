@@ -66,10 +66,6 @@ class ClassesController < ApplicationController
   # c. Retorno: Não há retorno.
   # d. Efeitos colaterais: Faz a atribuição das turmas do departamento.
   def turmas_do_departamento
-    if current_user.department.present?
-      Turma.where(department: current_user.department)
-    else
-      Turma.all
-    end
+    Turma.do_departamento(current_user.department)
   end
 end
