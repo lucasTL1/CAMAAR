@@ -105,7 +105,10 @@ Nesse passo, nos valemos da gema **RDoc** para gerar páginas HTML interativas q
 ## Features Desenvolvidas:
 
 ### Responsável: Lucas Teles Leiro
-
+- **Refatoração com Padrão Service Object**: Extração da lógica de leitura e processamento de arquivos (JSON/CSV) do `UsersController` para as classes de serviço `ParticipantImporterService` e `SigaaImporter`, garantindo o princípio de responsabilidade única (SRP) e contribuindo para a redução da complexidade das controladoras no RubyCritic.
+- **Implementação e Blindagem do `SigaaImporter`**: Adequação do algoritmo do importador para processar estruturas JSON aninhadas (docentes e discentes). Implementação de regras de fallback determinístico para e-mails nulos e proteção contra colisões de matrícula (`ActiveRecord::RecordInvalid`), garantindo a idempotência da funcionalidade.
+- **Estabilização de Rotas e Controladores**: Correção do mapeamento de rotas e padronização da nomenclatura do `TurmasController` (resolvendo erros de `MissingController`). Implementação do método `sigaa_import` no `UsersController` para garantir o fluxo correto de requisições via upload de arquivos.
+- **Resolução de Falhas na Suíte RSpec**: Alinhamento dos parâmetros e mocks nos testes de requisição (`users_spec.rb` e testes de serviço), resolvendo divergências de chaves (`with_indifferent_access`), corrigindo falsos negativos de erro 404 e validando o instanciamento correto em views (`TemplatesController`).
 ### Responsável: Davi Brasileiro Gomes
 - **Refatoramento das pastas /forms, /results, /templates e /answerable_forms das features** : Implementação da etapa "Yellow" do TDD nas pastas, garantindo testes RSpec com êxito e a manutenção do funcionamento da aplicação;
 - **Geração da documentação com o RDoc**: Adequação dos comentários inseridos nos códigos da aplicação para o melhor funcionamento da gema, considerando necessidades do projeto e a boa compreensão dos componentes chave por meio das páginas HTML;
