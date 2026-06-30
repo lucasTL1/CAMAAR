@@ -68,6 +68,7 @@ Aqui foram utilizados conceitos como **mocks, seams e factories** para aproveita
 - **Cadastrar usuários do sistema (#3)**: Criação da interface e lógica para que administradores cadastrem novos usuários (docentes ou discentes) informando dados e perfil de acesso.
 - **Buscar template (#1)**: Funcionalidade que permite ao usuário realizar buscas por templates existentes utilizando uma barra de pesquisa.
 - **Responder formulário (#2)**: Funcionalidade para o discente preencher as questões de múltipla escolha e discursivas de um formulário e enviar as respostas.
+- **Tratamento de Exceções e Fluxos Alternativos (Happy/Sad Paths)**: Implementação e correção das lógicas de sucesso (Happy Path) e de falha/exceção (Sad Path) nos controladores e serviços refatorados, assegurando respostas HTTP corretas (como os redirecionamentos apropriados em vez de falsos positivos `204 No Content`) e a correta exibição de alertas para o usuário.
 
 ### Responsável: Davi Brasileiro Gomes
 - **Login de usuários (#9)**: Implementação do fluxo de sign-in com uso das rotas do Devise.
